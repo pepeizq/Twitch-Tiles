@@ -149,7 +149,7 @@ Public NotInheritable Class MainPage
 
     Private Async Sub BotonCodigoFuente_Click(sender As Object, e As RoutedEventArgs) Handles botonCodigoFuente.Click
 
-        Await Launcher.LaunchUriAsync(New Uri("https://github.com/pepeizq/Steam-Tiles"))
+        Await Launcher.LaunchUriAsync(New Uri("https://github.com/pepeizq/Twitch-Tiles"))
 
     End Sub
 
