@@ -15,11 +15,11 @@ Module Twitch
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim buttonAñadir As Button = pagina.FindName("buttonAñadirCarpetaTwitch")
-        buttonAñadir.IsEnabled = False
+        Dim botonAñadir As Button = pagina.FindName("botonAñadirCarpetaTwitch")
+        botonAñadir.IsEnabled = False
 
-        Dim buttonBorrar As Button = pagina.FindName("buttonBorrarCarpetasTwitch")
-        buttonBorrar.IsEnabled = False
+        Dim botonBorrar As Button = pagina.FindName("botonBorrarCarpetasTwitch")
+        botonBorrar.IsEnabled = False
 
         Dim pr As ProgressRing = pagina.FindName("prTilesTwitch")
         pr.Visibility = Visibility.Visible
@@ -179,11 +179,10 @@ Module Twitch
             End If
         End If
 
-        Dim panelAvisoNoJuegosTwitch As DropShadowPanel = pagina.FindName("panelAvisoNoJuegosTwitch")
-        Dim popupAvisoSeleccionar As Popup = pagina.FindName("popupAvisoSeleccionar")
+        Dim panelAvisoNoJuegos As DropShadowPanel = pagina.FindName("panelAvisoNoJuegos")
 
         If listaFinal.Count > 0 Then
-            panelAvisoNoJuegosTwitch.Visibility = Visibility.Collapsed
+            panelAvisoNoJuegos.Visibility = Visibility.Collapsed
             listaFinal.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
 
             gv.Items.Clear()
@@ -227,16 +226,15 @@ Module Twitch
                 Toast("Twitch Tiles", listaFinal.Count.ToString + " " + recursos.GetString("Juegos Detectados"))
             End If
         Else
-            panelAvisoNoJuegosTwitch.Visibility = Visibility.Visible
-            popupAvisoSeleccionar.IsOpen = False
+            panelAvisoNoJuegos.Visibility = Visibility.Visible
 
             If boolBuscarCarpeta = True Then
                 Toast("Twitch Tiles", recursos.GetString("Fallo1"))
             End If
         End If
 
-        buttonAñadir.IsEnabled = True
-        buttonBorrar.IsEnabled = True
+        botonAñadir.IsEnabled = True
+        botonBorrar.IsEnabled = True
         pr.Visibility = Visibility.Collapsed
 
     End Sub
@@ -268,7 +266,7 @@ Module Twitch
             Next
 
             botonJuego.BorderThickness = New Thickness(6, 6, 6, 6)
-            botonJuego.BorderBrush = New SolidColorBrush("#6441a5".ToColor)
+            'botonJuego.BorderBrush = New SolidColorBrush("#6441a5".ToColor)
 
             Dim botonAñadirTile As Button = pagina.FindName("botonAñadirTile")
             Dim juego As Tile = botonJuego.Tag
