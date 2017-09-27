@@ -129,8 +129,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <PRIResource Include="Strings\en-US\Resources_viejo.resw" />
-    <PRIResource Include="Strings\es-ES\Resources_viejo.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
     <PRIResource Include="Strings\es-ES\Resources.resw" />
     <None Include="Twitch Tiles_StoreKey.pfx" />

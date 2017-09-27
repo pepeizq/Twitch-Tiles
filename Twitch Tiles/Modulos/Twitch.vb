@@ -180,9 +180,12 @@ Module Twitch
         End If
 
         Dim panelAvisoNoJuegos As DropShadowPanel = pagina.FindName("panelAvisoNoJuegos")
+        Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
 
         If listaFinal.Count > 0 Then
             panelAvisoNoJuegos.Visibility = Visibility.Collapsed
+            gridSeleccionar.Visibility = Visibility.Visible
+
             listaFinal.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
 
             gv.Items.Clear()
@@ -223,14 +226,11 @@ Module Twitch
             Next
 
             If boolBuscarCarpeta = True Then
-                Toast("Twitch Tiles", listaFinal.Count.ToString + " " + recursos.GetString("Juegos Detectados"))
+                Toast(listaFinal.Count.ToString + " " + recursos.GetString("GamesDetected"), Nothing)
             End If
         Else
             panelAvisoNoJuegos.Visibility = Visibility.Visible
-
-            If boolBuscarCarpeta = True Then
-                Toast("Twitch Tiles", recursos.GetString("Fallo1"))
-            End If
+            gridSeleccionar.Visibility = Visibility.Collapsed
         End If
 
         botonAñadir.IsEnabled = True
@@ -258,6 +258,9 @@ Module Twitch
 
             Dim grid As Grid = pagina.FindName("gridAñadirTiles")
             grid.Visibility = Visibility.Collapsed
+
+            Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
+            gridSeleccionar.Visibility = Visibility.Visible
         Else
             For Each item In gv.Items
                 Dim itemBoton As Button = item
@@ -266,7 +269,7 @@ Module Twitch
             Next
 
             botonJuego.BorderThickness = New Thickness(6, 6, 6, 6)
-            'botonJuego.BorderBrush = New SolidColorBrush("#6441a5".ToColor)
+            botonJuego.BorderBrush = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
 
             Dim botonAñadirTile As Button = pagina.FindName("botonAñadirTile")
             Dim juego As Tile = botonJuego.Tag
@@ -274,17 +277,17 @@ Module Twitch
 
             Dim imageJuegoSeleccionado As ImageEx = pagina.FindName("imageJuegoSeleccionado")
             Dim imagenCapsula As String = juego.Imagen.ToString
-            imagenCapsula = imagenCapsula.Replace("header.jpg", "capsule_184x69.jpg")
+
             imageJuegoSeleccionado.Source = New BitmapImage(New Uri(imagenCapsula))
 
             Dim tbJuegoSeleccionado As TextBlock = pagina.FindName("tbJuegoSeleccionado")
             tbJuegoSeleccionado.Text = juego.Titulo
 
-            Dim popupAviso As Popup = pagina.FindName("popupAvisoSeleccionar")
-            popupAviso.IsOpen = False
-
             Dim grid As Grid = pagina.FindName("gridAñadirTiles")
             grid.Visibility = Visibility.Visible
+
+            Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
+            gridSeleccionar.Visibility = Visibility.Collapsed
         End If
 
     End Sub
