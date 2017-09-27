@@ -253,9 +253,6 @@ Module Twitch
             botonJuego.BorderThickness = New Thickness(1, 1, 1, 1)
             botonJuego.BorderBrush = New SolidColorBrush(Colors.Black)
 
-            Dim popupAviso As Popup = pagina.FindName("popupAvisoSeleccionar")
-            popupAviso.IsOpen = True
-
             Dim grid As Grid = pagina.FindName("gridAñadirTiles")
             grid.Visibility = Visibility.Collapsed
 
