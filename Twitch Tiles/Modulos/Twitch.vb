@@ -245,6 +245,8 @@ Module Twitch
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
+        Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
+
         Dim gv As GridView = pagina.FindName("gridViewTilesTwitch")
 
         Dim botonJuego As Button = e.OriginalSource
@@ -259,6 +261,9 @@ Module Twitch
 
             Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
             gridSeleccionar.Visibility = Visibility.Visible
+
+            Dim recursos As New Resources.ResourceLoader()
+            tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + recursos.GetString("Tiles")
         Else
             For Each item In gv.Items
                 Dim itemBoton As Button = item
@@ -294,6 +299,8 @@ Module Twitch
 
             Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
             gridSeleccionar.Visibility = Visibility.Collapsed
+
+            tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + juego.Titulo
         End If
 
     End Sub
