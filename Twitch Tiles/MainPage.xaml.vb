@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.Services.Store.Engagement
-Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Windows.ApplicationModel.Core
 Imports Windows.Storage
 Imports Windows.System
@@ -145,12 +144,12 @@ Public NotInheritable Class MainPage
 
         ElseIf sp.Tag.ToString = 3 Then
 
-            If StoreServicesFeedbackLauncher.IsSupported = True Then
-                Dim ejecutador As StoreServicesFeedbackLauncher = StoreServicesFeedbackLauncher.GetDefault()
-                Await ejecutador.LaunchAsync()
-            Else
-                NavegarMasCosas("https://pepeizqapps.com/contact/")
-            End If
+            'If StoreServicesFeedbackLauncher.IsSupported = True Then
+            '    Dim ejecutador As StoreServicesFeedbackLauncher = StoreServicesFeedbackLauncher.GetDefault()
+            '    Await ejecutador.LaunchAsync()
+            'Else
+            NavegarMasCosas("https://pepeizqapps.com/contact/")
+            'End If
 
         ElseIf sp.Tag.ToString = 5 Then
 
