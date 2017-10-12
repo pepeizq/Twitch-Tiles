@@ -157,7 +157,7 @@ Public NotInheritable Class MainPage
 
         ElseIf sp.Tag.ToString = 6 Then
 
-            NavegarMasCosas("https://pepeizqapps.com/thanks/")
+            NavegarMasCosas("https://pepeizqapps.com/updates/")
 
         End If
 
