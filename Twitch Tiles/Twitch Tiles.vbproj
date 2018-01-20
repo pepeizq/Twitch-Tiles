@@ -131,6 +131,7 @@
     </AppxManifest>
     <PRIResource Include="Strings\en-US\Resources.resw" />
     <PRIResource Include="Strings\es-ES\Resources.resw" />
+    <PRIResource Include="Strings\zh-CN\Resources.resw" />
     <None Include="Twitch Tiles_StoreKey.pfx" />
     <None Include="Twitch Tiles_TemporaryKey.pfx" />
   </ItemGroup>
