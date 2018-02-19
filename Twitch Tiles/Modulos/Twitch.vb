@@ -1,9 +1,11 @@
 ﻿Imports Microsoft.Toolkit.Uwp.UI.Controls
+Imports SQLite.Net
+Imports SQLite.Net.Platform.WinRT
 Imports Windows.Storage
 Imports Windows.Storage.AccessCache
 Imports Windows.Storage.Pickers
-Imports Windows.Storage.Streams
 Imports Windows.UI
+Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Media.Animation
 
 Module Twitch
@@ -79,102 +81,24 @@ Module Twitch
         End Try
 
         If Not carpetaMaestra Is Nothing Then
-            Dim carpetaFuel As StorageFolder = Await carpetaMaestra.GetFolderAsync("Fuel\db\GameProductInfo")
+            Dim carpetaJuegos As StorageFolder = Await carpetaMaestra.GetFolderAsync("Games\Sql")
 
-            If Not carpetaFuel Is Nothing Then
-                Dim ficheros As IReadOnlyList(Of StorageFile) = Await carpetaFuel.GetFilesAsync()
+            If Not carpetaJuegos Is Nothing Then
+                Dim fichero As String = carpetaJuegos.Path + "\GameProductInfo.sqlite"
 
-                For Each fichero In ficheros
-                    If fichero.FileType.Contains(".cfs") Then
-                        Dim texto As String = Nothing
+                Dim bdOrigen As StorageFile = Await StorageFile.GetFileFromPathAsync(fichero)
+                Dim bdFinal As StorageFile = Await ApplicationData.Current.LocalFolder.CreateFileAsync("basedatos.sqlite", CreationCollisionOption.ReplaceExisting)
 
-                        Using inputStream As IRandomAccessStreamWithContentType = Await fichero.OpenReadAsync
-                            Using clasicoStream As Stream = inputStream.AsStreamForRead
-                                Using sr As StreamReader = New StreamReader(clasicoStream)
-                                    While sr.Peek <> 0
-                                        texto = texto + sr.ReadLine
-                                    End While
-                                End Using
-                            End Using
-                        End Using
+                Await bdOrigen.CopyAndReplaceAsync(bdFinal)
 
-                        If Not texto = Nothing Then
-                            Dim i As Integer = 0
-                            While i < 200
-                                If texto.Contains(ChrW(34) + "ProductTitle" + ChrW(34)) Then
-                                    Dim temp, temp2 As String
-                                    Dim int, int2 As Integer
+                Dim conexion As New SQLiteConnection(New SQLitePlatformWinRT, bdFinal.Path, Interop.SQLiteOpenFlags.ReadWrite)
 
-                                    int = texto.IndexOf(ChrW(34) + "ProductTitle" + ChrW(34))
-                                    temp = texto.Remove(0, int + 14)
+                Dim juegos As TableQuery(Of TwitchDB) = conexion.Table(Of TwitchDB)
 
-                                    texto = temp
+                For Each juego As TwitchDB In juegos
+                    Dim tile As New Tile(juego.Titulo, juego.Id, New Uri("twitch://fuel-launch/" + juego.Id), Nothing, Nothing, Nothing, New Uri(juego.Imagen))
 
-                                    int = temp.IndexOf(ChrW(34))
-                                    temp = temp.Remove(0, int + 1)
-
-                                    int2 = temp.IndexOf(ChrW(34))
-                                    temp2 = temp.Remove(int2, temp.Length - int2)
-
-                                    Dim titulo As String = temp2.Trim
-
-                                    Dim temp3, temp4 As String
-                                    Dim int3, int4 As Integer
-
-                                    int3 = texto.IndexOf(ChrW(34) + "Id" + ChrW(34))
-                                    temp3 = texto.Remove(0, int3 + 4)
-
-                                    int3 = temp3.IndexOf(ChrW(34))
-                                    temp3 = temp3.Remove(0, int3 + 1)
-
-                                    int4 = temp3.IndexOf(ChrW(34))
-                                    temp4 = temp3.Remove(int4, temp3.Length - int4)
-
-                                    Dim id As String = temp4.Trim
-
-                                    Dim tituloBool As Boolean = False
-                                    Dim g As Integer = 0
-                                    While g < listaFinal.Count
-                                        If listaFinal(g).Titulo = titulo Then
-                                            tituloBool = True
-                                        End If
-                                        g += 1
-                                    End While
-
-                                    If tituloBool = False Then
-                                        Dim htmlSteam As String = Await Decompiladores.HttpClient(New Uri("http://store.steampowered.com/search/?term=" + titulo.Replace(" ", "+")))
-
-                                        If Not htmlSteam = Nothing Then
-                                            Dim temp5, temp6 As String
-                                            Dim int5, int6 As Integer
-
-                                            int5 = htmlSteam.IndexOf("<!-- List Items -->")
-                                            temp5 = htmlSteam.Remove(0, int5)
-
-                                            int5 = temp5.IndexOf("<span class=" + ChrW(34) + "title" + ChrW(34) + ">" + titulo + "</span>")
-                                            temp5 = temp5.Remove(int5, temp5.Length - int5)
-
-                                            int5 = temp5.LastIndexOf("<img src=")
-                                            temp5 = temp5.Remove(0, int5 + 10)
-
-                                            int6 = temp5.IndexOf(ChrW(34))
-                                            temp6 = temp5.Remove(int6, temp5.Length - int6)
-
-                                            temp6 = temp6.Replace("capsule_sm_120", "header")
-
-                                            Dim imagen As Uri = New Uri(temp6.Trim)
-
-                                            Dim juego As New Tile(titulo, id, New Uri("twitch://fuel-launch/" + id), imagen, "Twitch", Nothing)
-                                            juego.Tile = juego
-
-                                            listaFinal.Add(juego)
-                                        End If
-                                    End If
-                                End If
-                                i += 1
-                            End While
-                        End If
-                    End If
+                    listaFinal.Add(tile)
                 Next
             End If
         End If
@@ -196,7 +120,7 @@ Module Twitch
                 Dim imagen As New ImageEx
 
                 Try
-                    imagen.Source = New BitmapImage(juego.Imagen)
+                    imagen.Source = New BitmapImage(juego.ImagenGrande)
                 Catch ex As Exception
 
                 End Try
@@ -221,6 +145,8 @@ Module Twitch
                 ToolTipService.SetPlacement(boton, PlacementMode.Mouse)
 
                 AddHandler boton.Click, AddressOf BotonTile_Click
+                AddHandler boton.PointerEntered, AddressOf UsuarioEntraBoton
+                AddHandler boton.PointerExited, AddressOf UsuarioSaleBoton
 
                 gv.Items.Add(boton)
             Next
@@ -239,68 +165,119 @@ Module Twitch
 
     End Sub
 
-    Private Sub BotonTile_Click(sender As Object, e As RoutedEventArgs)
+    Private Async Sub BotonTile_Click(sender As Object, e As RoutedEventArgs)
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
-
-        Dim gv As GridView = pagina.FindName("gridViewTilesTwitch")
-
         Dim botonJuego As Button = e.OriginalSource
+        Dim juego As Tile = botonJuego.Tag
 
-        Dim borde As Thickness = New Thickness(6, 6, 6, 6)
-        If botonJuego.BorderThickness = borde Then
-            botonJuego.BorderThickness = New Thickness(1, 1, 1, 1)
-            botonJuego.BorderBrush = New SolidColorBrush(Colors.Black)
+        Dim botonAñadirTile As Button = pagina.FindName("botonAñadirTile")
+        botonAñadirTile.Tag = juego
 
-            Dim gridAñadir As Grid = pagina.FindName("gridAñadirTiles")
-            gridAñadir.Visibility = Visibility.Collapsed
+        Dim imagenJuegoSeleccionado As ImageEx = pagina.FindName("imagenJuegoSeleccionado")
+        imagenJuegoSeleccionado.Source = New BitmapImage(juego.ImagenGrande)
 
-            Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
-            gridSeleccionar.Visibility = Visibility.Visible
+        Dim tbJuegoSeleccionado As TextBlock = pagina.FindName("tbJuegoSeleccionado")
+        tbJuegoSeleccionado.Text = juego.Titulo
 
-            Dim recursos As New Resources.ResourceLoader()
-            tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + recursos.GetString("Tiles")
-        Else
-            For Each item In gv.Items
-                Dim itemBoton As Button = item
-                itemBoton.BorderThickness = New Thickness(1, 1, 1, 1)
-                itemBoton.BorderBrush = New SolidColorBrush(Colors.Black)
-            Next
+        Dim gridAñadir As Grid = pagina.FindName("gridAñadirTile")
+        gridAñadir.Visibility = Visibility.Visible
 
-            botonJuego.BorderThickness = New Thickness(6, 6, 6, 6)
-            botonJuego.BorderBrush = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+        ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("tile", botonJuego)
 
-            Dim botonAñadirTile As Button = pagina.FindName("botonAñadirTile")
-            Dim juego As Tile = botonJuego.Tag
-            botonAñadirTile.Tag = juego
+        Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("tile")
 
-            Dim imageJuegoSeleccionado As ImageEx = pagina.FindName("imageJuegoSeleccionado")
-            Dim imagenCapsula As String = juego.Imagen.ToString
-
-            imageJuegoSeleccionado.Source = New BitmapImage(New Uri(imagenCapsula))
-
-            Dim tbJuegoSeleccionado As TextBlock = pagina.FindName("tbJuegoSeleccionado")
-            tbJuegoSeleccionado.Text = juego.Titulo
-
-            Dim gridAñadir As Grid = pagina.FindName("gridAñadirTiles")
-            gridAñadir.Visibility = Visibility.Visible
-
-            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("tile", botonJuego)
-
-            Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("tile")
-
-            If Not animacion Is Nothing Then
-                animacion.TryStart(gridAñadir)
-            End If
-
-            Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
-            gridSeleccionar.Visibility = Visibility.Collapsed
-
-            tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + juego.Titulo
+        If Not animacion Is Nothing Then
+            animacion.TryStart(gridAñadir)
         End If
+
+        Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
+        tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + juego.Titulo
+
+        '---------------------------------------------
+
+        Dim htmlSteam As String = Await Decompiladores.HttpClient(New Uri("http://store.steampowered.com/search/?term=" + juego.Titulo.Replace(" ", "+")))
+
+        If Not htmlSteam = Nothing Then
+            Dim temp5, temp6 As String
+            Dim int5, int6 As Integer
+
+            int5 = htmlSteam.IndexOf("<!-- List Items -->")
+            temp5 = htmlSteam.Remove(0, int5)
+
+            int5 = temp5.IndexOf("<span class=" + ChrW(34) + "title" + ChrW(34) + ">" + juego.Titulo + "</span>")
+            temp5 = temp5.Remove(int5, temp5.Length - int5)
+
+            int5 = temp5.LastIndexOf("data-ds-appid=")
+            temp5 = temp5.Remove(0, int5 + 15)
+
+            int6 = temp5.IndexOf(ChrW(34))
+            temp6 = temp5.Remove(int6, temp5.Length - int6)
+
+            Dim idSteam As String = temp6.Trim
+
+            juego.ImagenPequeña = Await SacarIcono(idSteam)
+            juego.ImagenAncha = New Uri("http://cdn.edgecast.steamstatic.com/steam/apps/" + idSteam + "/header.jpg", UriKind.RelativeOrAbsolute)
+        End If
+
+        '---------------------------------------------
+
+        Dim imagenPequeña As ImageEx = pagina.FindName("imagenTilePequeña")
+        Dim tbPequeña As TextBlock = pagina.FindName("tbTilePequeña")
+
+        If Not juego.ImagenPequeña = Nothing Then
+            imagenPequeña.Source = juego.ImagenPequeña
+            imagenPequeña.Visibility = Visibility.Visible
+            tbPequeña.Visibility = Visibility.Collapsed
+        Else
+            imagenPequeña.Visibility = Visibility.Collapsed
+            tbPequeña.Visibility = Visibility.Visible
+        End If
+
+        '---------------------------------------------
+
+        Dim imagenMediana As ImageEx = pagina.FindName("imagenTileMediana")
+        imagenMediana.Visibility = Visibility.Collapsed
+
+        Dim tbMediana As TextBlock = pagina.FindName("tbTileMediana")
+        tbMediana.Visibility = Visibility.Visible
+
+        '---------------------------------------------
+
+        Dim imagenAncha As ImageEx = pagina.FindName("imagenTileAncha")
+        Dim tbAncha As TextBlock = pagina.FindName("tbTileAncha")
+
+        If Not juego.ImagenAncha = Nothing Then
+            imagenAncha.Source = juego.ImagenAncha
+            imagenAncha.Visibility = Visibility.Visible
+            tbAncha.Visibility = Visibility.Collapsed
+        Else
+            imagenAncha.Visibility = Visibility.Collapsed
+            tbAncha.Visibility = Visibility.Visible
+        End If
+
+        '---------------------------------------------
+
+        Dim imagenGrande As ImageEx = pagina.FindName("imagenTileGrande")
+        imagenGrande.Source = juego.ImagenGrande
+        imagenGrande.Visibility = Visibility.Visible
+
+        Dim tbGrande As TextBlock = pagina.FindName("tbTileGrande")
+        tbGrande.Visibility = Visibility.Collapsed
+
+    End Sub
+
+    Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+    End Sub
+
+    Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
     End Sub
 
@@ -322,5 +299,53 @@ Module Twitch
         Generar(False)
 
     End Sub
+
+    Public Async Function SacarIcono(id As String) As Task(Of Uri)
+
+        Dim html As String = Await Decompiladores.HttpClient(New Uri("http://store.steampowered.com/app/" + id + "/"))
+        Dim uriIcono As Uri = Nothing
+
+        If Not html = Nothing Then
+            If html.Contains("<div class=" + ChrW(34) + "apphub_AppIcon") Then
+                Dim temp, temp2 As String
+                Dim int, int2 As Integer
+
+                int = html.IndexOf("<div class=" + ChrW(34) + "apphub_AppIcon")
+                temp = html.Remove(0, int)
+
+                int = temp.IndexOf("<img src=")
+                temp = temp.Remove(0, int + 10)
+
+                int2 = temp.IndexOf(ChrW(34))
+                temp2 = temp.Remove(int2, temp.Length - int2)
+
+                uriIcono = New Uri(temp2.Trim)
+            End If
+        End If
+
+        If uriIcono = Nothing Then
+            html = Await Decompiladores.HttpClient(New Uri("https://steamdb.info/app/" + id + "/"))
+
+            If Not html = Nothing Then
+                If html.Contains("<img class=" + ChrW(34) + "app-icon avatar") Then
+                    Dim temp, temp2 As String
+                    Dim int, int2 As Integer
+
+                    int = html.IndexOf("<img class=" + ChrW(34) + "app-icon avatar")
+                    temp = html.Remove(0, int)
+
+                    int = temp.IndexOf("src=")
+                    temp = temp.Remove(0, int + 5)
+
+                    int2 = temp.IndexOf(ChrW(34))
+                    temp2 = temp.Remove(int2, temp.Length - int2)
+
+                    uriIcono = New Uri(temp2.Trim)
+                End If
+            End If
+        End If
+
+        Return uriIcono
+    End Function
 
 End Module

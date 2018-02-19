@@ -114,11 +114,13 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Clases\Tile.vb" />
+    <Compile Include="Clases\TwitchBD.vb" />
     <Compile Include="MainPage.xaml.vb">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modulos\Config.vb" />
     <Compile Include="Modulos\Decompiladores.vb" />
+    <Compile Include="Modulos\MasCosas.vb" />
     <Compile Include="Modulos\NavigationViewItems.vb" />
     <Compile Include="Modulos\Notificaciones.vb" />
     <Compile Include="Modulos\Twitch.vb" />
@@ -252,6 +254,12 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>2.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="SQLite.Net-PCL">
+      <Version>3.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="SQLite.UWP.Native">
+      <Version>3.12.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
