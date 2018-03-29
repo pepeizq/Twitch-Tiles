@@ -34,7 +34,7 @@
     <Prefer32Bit>true</Prefer32Bit>
     <DocumentationFile>Twitch_Tiles.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
-    <IntermediateOutputPath>C:\Users\pepeizq\AppData\Local\Temp\vsF25.tmp\x86\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\pepei\AppData\Local\Temp\vs4297.tmp\x86\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
@@ -48,7 +48,7 @@
     <DocumentationFile>Twitch_Tiles.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-    <IntermediateOutputPath>C:\Users\pepeizq\AppData\Local\Temp\vsF25.tmp\x86\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\pepei\AppData\Local\Temp\vs4297.tmp\x86\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -62,7 +62,7 @@
     <Prefer32Bit>true</Prefer32Bit>
     <DocumentationFile>Twitch_Tiles.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
-    <IntermediateOutputPath>C:\Users\pepeizq\AppData\Local\Temp\vsF25.tmp\ARM\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\pepei\AppData\Local\Temp\vs4297.tmp\ARM\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <DefineTrace>true</DefineTrace>
@@ -76,7 +76,7 @@
     <DocumentationFile>Twitch_Tiles.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-    <IntermediateOutputPath>C:\Users\pepeizq\AppData\Local\Temp\vsF25.tmp\ARM\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\pepei\AppData\Local\Temp\vs4297.tmp\ARM\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -90,7 +90,7 @@
     <Prefer32Bit>true</Prefer32Bit>
     <DocumentationFile>Twitch_Tiles.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
-    <IntermediateOutputPath>C:\Users\pepeizq\AppData\Local\Temp\vsF25.tmp\x64\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\pepei\AppData\Local\Temp\vs4297.tmp\x64\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
@@ -104,7 +104,7 @@
     <DocumentationFile>Twitch_Tiles.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-    <IntermediateOutputPath>C:\Users\pepeizq\AppData\Local\Temp\vsF25.tmp\x64\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\pepei\AppData\Local\Temp\vs4297.tmp\x64\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>

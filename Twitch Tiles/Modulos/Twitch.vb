@@ -34,7 +34,7 @@ Module Twitch
             tbCarpetas.Text = ""
         End If
 
-        Dim recursos As Resources.ResourceLoader = New Resources.ResourceLoader()
+        Dim recursos As New Resources.ResourceLoader()
         Dim numCarpetas As ApplicationDataContainer = ApplicationData.Current.LocalSettings
 
         If boolBuscarCarpeta = True Then
