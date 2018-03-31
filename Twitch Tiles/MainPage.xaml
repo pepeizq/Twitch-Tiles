@@ -225,22 +225,22 @@
                                 </Grid>
 
                                 <StackPanel Orientation="Vertical" Padding="15">
-                                    <TextBlock x:Uid="ConfigTwitchFolderMessage" VerticalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap"/>
+                                    <TextBlock x:Uid="ConfigFolderMessage" VerticalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap"/>
 
                                     <Button x:Name="botonAñadirCarpetaTwitch" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                         <StackPanel Orientation="Horizontal">
                                             <SymbolIcon Symbol="NewFolder" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
-                                            <TextBlock x:Uid="ConfigSteamAddFolder" Foreground="White"/>
+                                            <TextBlock x:Uid="ConfigAddFolder" Foreground="White"/>
                                         </StackPanel>
                                     </Button>
 
-                                    <TextBlock x:Uid="ConfigSteamFoldersAdded" Margin="0,15,0,0"/>
+                                    <TextBlock x:Uid="ConfigFoldersAdded" Margin="0,15,0,0"/>
                                     <TextBlock x:Name="tbCarpetasDetectadasTwitch"/>
 
                                     <Button x:Name="botonBorrarCarpetasTwitch" Margin="0,25,0,0" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                         <StackPanel Orientation="Horizontal">
                                             <SymbolIcon Symbol="Delete" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
-                                            <TextBlock x:Uid="ConfigSteamDeleteFolders" Foreground="White"/>
+                                            <TextBlock x:Uid="ConfigDeleteFolders" Foreground="White"/>
                                         </StackPanel>
                                     </Button>
                                 </StackPanel>

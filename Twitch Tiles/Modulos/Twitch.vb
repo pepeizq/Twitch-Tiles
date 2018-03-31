@@ -39,7 +39,7 @@ Module Twitch
 
         If boolBuscarCarpeta = True Then
             Try
-                Dim picker As FolderPicker = New FolderPicker()
+                Dim picker As New FolderPicker()
 
                 picker.FileTypeFilter.Add("*")
                 picker.ViewMode = PickerViewMode.List
@@ -285,7 +285,7 @@ Module Twitch
 
         StorageApplicationPermissions.FutureAccessList.Clear()
 
-        Dim recursos As Resources.ResourceLoader = New Resources.ResourceLoader()
+        Dim recursos As New Resources.ResourceLoader()
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
