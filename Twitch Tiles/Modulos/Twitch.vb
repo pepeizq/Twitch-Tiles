@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Toolkit.Uwp.UI.Controls
+﻿Imports Microsoft.Toolkit.Uwp.UI.Animations
+Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports SQLite.Net
 Imports SQLite.Net.Platform.WinRT
 Imports Windows.Storage
@@ -271,11 +272,21 @@ Module Twitch
 
     Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
 
+        Dim boton As Button = sender
+        Dim imagen As ImageEx = boton.Content
+
+        imagen.Saturation(0).Start()
+
         Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
 
     End Sub
 
     Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Dim boton As Button = sender
+        Dim imagen As ImageEx = boton.Content
+
+        imagen.Saturation(1).Start()
 
         Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
