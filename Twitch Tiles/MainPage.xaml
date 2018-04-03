@@ -5,6 +5,7 @@
     
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:fa="using:FontAwesome.UWP"
     
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -150,11 +151,12 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock x:Uid="GameSelectedTiles" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                    <TextBlock Grid.Column="1" FontFamily="Segoe MDL2 Assets" Text="&#59718;" Foreground="{StaticResource BrushSecundario}" FontSize="28">
+
+                                    <fa:FontAwesome Icon="InfoCircle" Grid.Column="1" Foreground="{StaticResource BrushSecundario}">
                                          <ToolTipService.ToolTip>
                                              <TextBlock x:Uid="TooltipChangeImage" TextWrapping="Wrap" FontSize="15"/>
-                                         </ToolTipService.ToolTip> 
-                                    </TextBlock>
+                                         </ToolTipService.ToolTip>
+                                    </fa:FontAwesome>
                                 </Grid>
 
                                 <StackPanel Orientation="Horizontal">
@@ -241,8 +243,6 @@
                         </StackPanel> 
                     </ScrollViewer> 
                 </Grid>
-
-                <Grid x:Name="gridMasCosas" Visibility="Collapsed"/>
             </Grid> 
         </NavigationView>      
     </Grid>

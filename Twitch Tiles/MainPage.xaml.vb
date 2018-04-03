@@ -77,12 +77,10 @@ Public NotInheritable Class MainPage
                                                                        gridAñadirTile.Background = App.Current.Resources("GridAcrilico")
                                                                        gridConfig.Background = App.Current.Resources("GridAcrilico")
                                                                        gridConfigTiles.Background = App.Current.Resources("GridTituloBackground")
-                                                                       gridMasCosas.Background = App.Current.Resources("GridAcrilico")
                                                                    Else
                                                                        gridAñadirTile.Background = New SolidColorBrush(Colors.LightGray)
                                                                        gridConfig.Background = New SolidColorBrush(Colors.LightGray)
                                                                        gridConfigTiles.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
-                                                                       gridMasCosas.Background = New SolidColorBrush(Colors.LightGray)
                                                                    End If
                                                                End Sub)
 
@@ -94,7 +92,6 @@ Public NotInheritable Class MainPage
 
         gridAñadirTile.Visibility = Visibility.Collapsed
         gridConfig.Visibility = Visibility.Collapsed
-        gridMasCosas.Visibility = Visibility.Collapsed
 
         grid.Visibility = Visibility.Visible
 
