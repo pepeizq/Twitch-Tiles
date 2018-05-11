@@ -226,7 +226,7 @@ Module Twitch
         '---------------------------------------------
 
         Dim imagenPequeña As ImageEx = pagina.FindName("imagenTilePequeña")
-        Dim tbPequeña As TextBlock = pagina.FindName("tbTilePequeña")
+        Dim tbPequeña As FontAwesome.UWP.FontAwesome = pagina.FindName("tbTilePequeña")
 
         If Not juego.ImagenPequeña = Nothing Then
             imagenPequeña.Source = juego.ImagenPequeña
@@ -242,13 +242,13 @@ Module Twitch
         Dim imagenMediana As ImageEx = pagina.FindName("imagenTileMediana")
         imagenMediana.Visibility = Visibility.Collapsed
 
-        Dim tbMediana As TextBlock = pagina.FindName("tbTileMediana")
+        Dim tbMediana As FontAwesome.UWP.FontAwesome = pagina.FindName("tbTileMediana")
         tbMediana.Visibility = Visibility.Visible
 
         '---------------------------------------------
 
         Dim imagenAncha As ImageEx = pagina.FindName("imagenTileAncha")
-        Dim tbAncha As TextBlock = pagina.FindName("tbTileAncha")
+        Dim tbAncha As FontAwesome.UWP.FontAwesome = pagina.FindName("tbTileAncha")
 
         If Not juego.ImagenAncha = Nothing Then
             imagenAncha.Source = juego.ImagenAncha
@@ -265,7 +265,7 @@ Module Twitch
         imagenGrande.Source = juego.ImagenGrande
         imagenGrande.Visibility = Visibility.Visible
 
-        Dim tbGrande As TextBlock = pagina.FindName("tbTileGrande")
+        Dim tbGrande As FontAwesome.UWP.FontAwesome = pagina.FindName("tbTileGrande")
         tbGrande.Visibility = Visibility.Collapsed
 
     End Sub
