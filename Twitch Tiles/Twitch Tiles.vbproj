@@ -17,7 +17,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>Twitch Tiles_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>E9862D22F17EA1D7D31DC184302B5961C1A3DA17</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>E52A3F23FD65498167EAFE7C5F46EF5D5CBE55A1</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
@@ -137,6 +137,7 @@
     <PRIResource Include="Strings\en-US\Resources.resw" />
     <PRIResource Include="Strings\es-ES\Resources.resw" />
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
+    <PRIResource Include="Strings\pl-PL\Resources.resw" />
     <None Include="Twitch Tiles_StoreKey.pfx" />
     <None Include="Twitch Tiles_TemporaryKey.pfx" />
   </ItemGroup>
@@ -275,6 +276,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
