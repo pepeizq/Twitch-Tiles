@@ -214,21 +214,27 @@ Module Twitch
             Dim int5, int6 As Integer
 
             int5 = htmlSteam.IndexOf("<!-- List Items -->")
-            temp5 = htmlSteam.Remove(0, int5)
 
-            int5 = temp5.IndexOf("<span class=" + ChrW(34) + "title" + ChrW(34) + ">" + juego.Titulo + "</span>")
-            temp5 = temp5.Remove(int5, temp5.Length - int5)
+            If Not int5 = -1 Then
+                temp5 = htmlSteam.Remove(0, int5)
 
-            int5 = temp5.LastIndexOf("data-ds-appid=")
-            temp5 = temp5.Remove(0, int5 + 15)
+                int5 = temp5.IndexOf("<span class=" + ChrW(34) + "title" + ChrW(34) + ">" + juego.Titulo + "</span>")
 
-            int6 = temp5.IndexOf(ChrW(34))
-            temp6 = temp5.Remove(int6, temp5.Length - int6)
+                If Not int5 = -1 Then
+                    temp5 = temp5.Remove(int5, temp5.Length - int5)
 
-            Dim idSteam As String = temp6.Trim
+                    int5 = temp5.LastIndexOf("data-ds-appid=")
+                    temp5 = temp5.Remove(0, int5 + 15)
 
-            juego.ImagenPequeña = Await SacarIcono(idSteam)
-            juego.ImagenAncha = New Uri("http://cdn.edgecast.steamstatic.com/steam/apps/" + idSteam + "/header.jpg", UriKind.RelativeOrAbsolute)
+                    int6 = temp5.IndexOf(ChrW(34))
+                    temp6 = temp5.Remove(int6, temp5.Length - int6)
+
+                    Dim idSteam As String = temp6.Trim
+
+                    juego.ImagenPequeña = Await SacarIcono(idSteam)
+                    juego.ImagenAncha = New Uri("http://cdn.edgecast.steamstatic.com/steam/apps/" + idSteam + "/header.jpg", UriKind.RelativeOrAbsolute)
+                End If
+            End If
         End If
 
         '---------------------------------------------
