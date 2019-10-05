@@ -3,6 +3,7 @@ Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports Windows.Storage
 Imports Windows.Storage.Pickers
 Imports Windows.Storage.Streams
+Imports Windows.System
 Imports Windows.UI
 Imports Windows.UI.Core
 
@@ -504,6 +505,18 @@ Public NotInheritable Class MainPage
     Private Sub BotonBorrarCarpetasTwitch_Click(sender As Object, e As RoutedEventArgs) Handles botonBorrarCarpetasTwitch.Click
 
         Twitch.Borrar()
+
+    End Sub
+
+    Private Async Sub BotonComoAñadirCarpeta_Click(sender As Object, e As RoutedEventArgs) Handles botonComoAñadirCarpeta.Click
+
+        Await Launcher.LaunchUriAsync(New Uri("https://support.microsoft.com/en-us/help/14201/windows-show-hidden-files"))
+
+    End Sub
+
+    Private Sub BotonConfigLimpiarCache_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigLimpiarCache.Click
+
+        Cache.Limpiar()
 
     End Sub
 

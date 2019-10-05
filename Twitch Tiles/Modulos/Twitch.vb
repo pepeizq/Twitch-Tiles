@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Toolkit.Uwp.UI.Animations
+﻿Imports Microsoft.Toolkit.Uwp.Helpers
+Imports Microsoft.Toolkit.Uwp.UI.Animations
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports SQLite.Net
 Imports SQLite.Net.Platform.WinRT
@@ -15,6 +16,10 @@ Module Twitch
 
     Public Async Sub Generar(boolBuscarCarpeta As Boolean)
 
+        Dim helper As New LocalObjectStorageHelper
+
+        Dim recursos As New Resources.ResourceLoader()
+
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
@@ -24,18 +29,27 @@ Module Twitch
         Dim botonBorrar As Button = pagina.FindName("botonBorrarCarpetasTwitch")
         botonBorrar.IsEnabled = False
 
-        Dim pr As ProgressRing = pagina.FindName("prTilesTwitch")
+        Dim pr As ProgressRing = pagina.FindName("prTiles")
         pr.Visibility = Visibility.Visible
 
-        Dim gv As GridView = pagina.FindName("gridViewTilesTwitch")
+        Dim botonCache As Button = pagina.FindName("botonConfigLimpiarCache")
+        botonCache.IsEnabled = False
+
+        Dim gv As GridView = pagina.FindName("gridViewTiles")
+        gv.Items.Clear()
+
+        Dim listaJuegos As New List(Of Tile)
+
+        If Await helper.FileExistsAsync("juegos") = True Then
+            listaJuegos = Await helper.ReadFileAsync(Of List(Of Tile))("juegos")
+        End If
 
         Dim tbCarpetas As TextBlock = pagina.FindName("tbCarpetasDetectadasTwitch")
 
         If Not tbCarpetas.Text = Nothing Then
-            tbCarpetas.Text = ""
+            tbCarpetas.Text = String.Empty
         End If
 
-        Dim recursos As New Resources.ResourceLoader()
         Dim numCarpetas As ApplicationDataContainer = ApplicationData.Current.LocalSettings
 
         If boolBuscarCarpeta = True Then
@@ -71,8 +85,6 @@ Module Twitch
 
         '-------------------------------------------------------------
 
-        Dim listaFinal As List(Of Tile) = New List(Of Tile)
-
         Dim carpetaMaestra As StorageFolder = Nothing
 
         Try
@@ -104,26 +116,49 @@ Module Twitch
                     Dim juegos As TableQuery(Of TwitchDB) = conexion.Table(Of TwitchDB)
 
                     For Each juego As TwitchDB In juegos
-                        Dim tile As New Tile(juego.Titulo, juego.Id, "twitch://fuel-launch/" + juego.Id, Nothing, New Uri(juego.Imagen), Nothing, New Uri(juego.Imagen))
+                        Dim añadir As Boolean = True
+                        Dim g As Integer = 0
+                        While g < listaJuegos.Count
+                            If listaJuegos(g).ID = juego.ID Then
+                                añadir = False
+                            End If
+                            g += 1
+                        End While
 
-                        listaFinal.Add(tile)
+                        If añadir = True Then
+                            Dim imagen As String = String.Empty
+
+                            Try
+                                imagen = Await Cache.DescargarImagen(juego.Imagen, juego.ID, "base")
+                            Catch ex As Exception
+
+                            End Try
+
+                            Dim tile As New Tile(juego.Titulo, juego.ID, "twitch://fuel-launch/" + juego.ID, Nothing, New Uri(imagen), Nothing, New Uri(imagen))
+
+                            listaJuegos.Add(tile)
+                        End If
                     Next
                 End If
             End If
         End If
 
+        Await helper.SaveFileAsync(Of List(Of Tile))("juegos", listaJuegos)
+
+        pr.Visibility = Visibility.Collapsed
+
         Dim panelAvisoNoJuegos As Grid = pagina.FindName("panelAvisoNoJuegos")
         Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
 
-        If listaFinal.Count > 0 Then
+        If listaJuegos.Count > 0 Then
             panelAvisoNoJuegos.Visibility = Visibility.Collapsed
             gridSeleccionar.Visibility = Visibility.Visible
 
-            listaFinal.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
+            listaJuegos.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
 
             gv.Items.Clear()
 
-            For Each juego In listaFinal
+            For Each juego In listaJuegos
                 Dim boton As New Button
 
                 Dim imagen As New ImageEx
@@ -161,7 +196,7 @@ Module Twitch
             Next
 
             If boolBuscarCarpeta = True Then
-                Toast(listaFinal.Count.ToString + " " + recursos.GetString("GamesDetected"), Nothing)
+                Toast(listaJuegos.Count.ToString + " " + recursos.GetString("GamesDetected"), Nothing)
             End If
         Else
             panelAvisoNoJuegos.Visibility = Visibility.Visible
@@ -170,7 +205,7 @@ Module Twitch
 
         botonAñadir.IsEnabled = True
         botonBorrar.IsEnabled = True
-        pr.Visibility = Visibility.Collapsed
+        botonCache.IsEnabled = True
 
     End Sub
 
@@ -231,7 +266,7 @@ Module Twitch
 
                     Dim idSteam As String = temp6.Trim
 
-                    juego.ImagenPequeña = Await SacarIcono(idSteam)
+                    juego.ImagenPequeña = Await Steam.SacarIcono(idSteam)
                     juego.ImagenAncha = New Uri("http://cdn.edgecast.steamstatic.com/steam/apps/" + idSteam + "/header.jpg", UriKind.RelativeOrAbsolute)
                 End If
             End If
@@ -349,55 +384,5 @@ Module Twitch
         Generar(False)
 
     End Sub
-
-    Public Async Function SacarIcono(id As String) As Task(Of Uri)
-
-        Dim html As String = Await Decompiladores.HttpClient(New Uri("https://store.steampowered.com/app/" + id + "/"))
-        Dim uriIcono As Uri = Nothing
-
-        If Not html = Nothing Then
-            If html.Contains("<div class=" + ChrW(34) + "apphub_AppIcon") Then
-                Dim temp, temp2 As String
-                Dim int, int2 As Integer
-
-                int = html.IndexOf("<div class=" + ChrW(34) + "apphub_AppIcon")
-                temp = html.Remove(0, int)
-
-                int = temp.IndexOf("<img src=")
-                temp = temp.Remove(0, int + 10)
-
-                int2 = temp.IndexOf(ChrW(34))
-                temp2 = temp.Remove(int2, temp.Length - int2)
-
-                temp2 = temp2.Replace("%CDN_HOST_MEDIA_SSL%", "steamcdn-a.akamaihd.net")
-
-                uriIcono = New Uri(temp2.Trim)
-            End If
-        End If
-
-        If uriIcono = Nothing Then
-            html = Await Decompiladores.HttpClient(New Uri("https://steamdb.info/app/" + id + "/"))
-
-            If Not html = Nothing Then
-                If html.Contains("<img class=" + ChrW(34) + "app-icon avatar") Then
-                    Dim temp, temp2 As String
-                    Dim int, int2 As Integer
-
-                    int = html.IndexOf("<img class=" + ChrW(34) + "app-icon avatar")
-                    temp = html.Remove(0, int)
-
-                    int = temp.IndexOf("src=")
-                    temp = temp.Remove(0, int + 5)
-
-                    int2 = temp.IndexOf(ChrW(34))
-                    temp2 = temp.Remove(int2, temp.Length - int2)
-
-                    uriIcono = New Uri(temp2.Trim)
-                End If
-            End If
-        End If
-
-        Return uriIcono
-    End Function
 
 End Module

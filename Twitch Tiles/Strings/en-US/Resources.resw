@@ -264,4 +264,13 @@
   <data name="TileWide.Text" xml:space="preserve">
     <value>Wide Tile</value>
   </data>
+  <data name="ConfigCleanCache.Text" xml:space="preserve">
+    <value>Clear Cache</value>
+  </data>
+  <data name="ConfigFolderHowAdd.Content" xml:space="preserve">
+    <value>How to unlock</value>
+  </data>
+  <data name="ConfigFolderWarning.Text" xml:space="preserve">
+    <value>Depending on the Windows configuration the folder may be hidden</value>
+  </data>
 </root>

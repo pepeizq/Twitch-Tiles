@@ -7,7 +7,7 @@ Public Class TwitchDB
     Public Property Titulo As String
 
     <Column("ProductIdStr")>
-    Public Property Id As String
+    Public Property ID As String
 
     <Column("ProductIconUrl")>
     Public Property Imagen As String

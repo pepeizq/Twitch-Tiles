@@ -264,4 +264,13 @@
   <data name="TileWide.Text" xml:space="preserve">
     <value>Tile Ancha</value>
   </data>
+  <data name="ConfigCleanCache.Text" xml:space="preserve">
+    <value>Limpiar Cache</value>
+  </data>
+  <data name="ConfigFolderHowAdd.Content" xml:space="preserve">
+    <value>Como desbloquear</value>
+  </data>
+  <data name="ConfigFolderWarning.Text" xml:space="preserve">
+    <value>Dependiendo de la configuración de Windows la carpeta puede estar oculta</value>
+  </data>
 </root>
