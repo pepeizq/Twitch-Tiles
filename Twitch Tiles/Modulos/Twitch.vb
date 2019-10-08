@@ -29,8 +29,11 @@ Module Twitch
         Dim botonBorrar As Button = pagina.FindName("botonBorrarCarpetasTwitch")
         botonBorrar.IsEnabled = False
 
-        Dim pr As ProgressRing = pagina.FindName("prTiles")
-        pr.Visibility = Visibility.Visible
+        Dim spProgreso As StackPanel = pagina.FindName("spProgreso")
+        spProgreso.Visibility = Visibility.Visible
+
+        Dim tbProgreso As TextBlock = pagina.FindName("tbProgreso")
+        tbProgreso.Text = String.Empty
 
         Dim botonCache As Button = pagina.FindName("botonConfigLimpiarCache")
         botonCache.IsEnabled = False
@@ -115,6 +118,7 @@ Module Twitch
 
                     Dim juegos As TableQuery(Of TwitchDB) = conexion.Table(Of TwitchDB)
 
+                    Dim k As Integer = 0
                     For Each juego As TwitchDB In juegos
                         Dim añadir As Boolean = True
                         Dim g As Integer = 0
@@ -138,6 +142,9 @@ Module Twitch
 
                             listaJuegos.Add(tile)
                         End If
+
+                        tbProgreso.Text = k.ToString + "/" + juegos.Count.ToString
+                        k += 1
                     Next
                 End If
             End If
@@ -145,7 +152,7 @@ Module Twitch
 
         Await helper.SaveFileAsync(Of List(Of Tile))("juegos", listaJuegos)
 
-        pr.Visibility = Visibility.Collapsed
+        spProgreso.Visibility = Visibility.Collapsed
 
         Dim panelAvisoNoJuegos As Grid = pagina.FindName("panelAvisoNoJuegos")
         Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
