@@ -17,6 +17,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!--<controls:AdaptiveGridView x:Name="gridViewTiles" Grid.Row="1" Margin="0,20,0,0"
+                                       IsItemClickEnabled="True" DesiredWidth="150" ItemHeight="200" 
+                                       animations:ReorderGridAnimation.Duration="250">
+        </controls:AdaptiveGridView>-->
+
+        <!--<Border Grid.Column="0" BorderThickness="1" BorderBrush="{StaticResource BrushPrimario}" Width="184" Height="69" VerticalAlignment="Center">
+            <controls:ImageEx x:Name="imagenJuegoSeleccionado" Stretch="UniformToFill" IsCacheEnabled="True"/>
+        </Border>-->
+
         <Grid x:Name="gridTitulo" Grid.Row="0" Background="{StaticResource GridTituloBackground}">
             <TextBlock x:Name="tbTitulo" Margin="15,0,0,0" FontSize="13" Foreground="White" VerticalAlignment="Center"/>
         </Grid>
