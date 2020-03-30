@@ -12,6 +12,7 @@ Imports Windows.UI.Xaml.Media.Animation
 
 Module Twitch
 
+    Public anchoColumna As Integer = 306
     Dim clave As String = "TwitchCarpeta"
 
     Public Async Sub Generar(boolBuscarCarpeta As Boolean)
@@ -32,13 +33,19 @@ Module Twitch
         Dim spProgreso As StackPanel = pagina.FindName("spProgreso")
         spProgreso.Visibility = Visibility.Visible
 
+        Dim pbProgreso As ProgressBar = pagina.FindName("pbProgreso")
+        pbProgreso.Value = 0
+
         Dim tbProgreso As TextBlock = pagina.FindName("tbProgreso")
         tbProgreso.Text = String.Empty
 
         Dim botonCache As Button = pagina.FindName("botonConfigLimpiarCache")
         botonCache.IsEnabled = False
 
-        Dim gv As GridView = pagina.FindName("gridViewTiles")
+        Dim gridSeleccionarJuego As Grid = pagina.FindName("gridSeleccionarJuego")
+        gridSeleccionarJuego.Visibility = Visibility.Collapsed
+
+        Dim gv As GridView = pagina.FindName("gvTiles")
         gv.Items.Clear()
 
         Dim listaJuegos As New List(Of Tile)
@@ -65,7 +72,6 @@ Module Twitch
                 Dim carpeta As StorageFolder = Await picker.PickSingleFolderAsync()
                 StorageApplicationPermissions.FutureAccessList.AddOrReplace(clave, carpeta)
                 tbCarpetas.Text = carpeta.Path
-
             Catch ex As Exception
 
             End Try
@@ -143,6 +149,7 @@ Module Twitch
                             listaJuegos.Add(tile)
                         End If
 
+                        pbProgreso.Value = CInt((100 / juegos.Count) * k)
                         tbProgreso.Text = k.ToString + "/" + juegos.Count.ToString
                         k += 1
                     Next
@@ -154,38 +161,40 @@ Module Twitch
 
         spProgreso.Visibility = Visibility.Collapsed
 
-        Dim panelAvisoNoJuegos As Grid = pagina.FindName("panelAvisoNoJuegos")
-        Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
+        Dim gridTiles As Grid = pagina.FindName("gridTiles")
+        Dim gridAvisoNoJuegos As Grid = pagina.FindName("gridAvisoNoJuegos")
 
         If listaJuegos.Count > 0 Then
-            panelAvisoNoJuegos.Visibility = Visibility.Collapsed
-            gridSeleccionar.Visibility = Visibility.Visible
+            gridTiles.Visibility = Visibility.Visible
+            gridAvisoNoJuegos.Visibility = Visibility.Collapsed
+            gridSeleccionarJuego.Visibility = Visibility.Visible
 
             listaJuegos.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
 
             gv.Items.Clear()
 
             For Each juego In listaJuegos
+                Dim panel As New DropShadowPanel With {
+                    .Margin = New Thickness(5, 5, 5, 5),
+                    .ShadowOpacity = 0.9,
+                    .BlurRadius = 5
+                }
+
                 Dim boton As New Button
 
-                Dim imagen As New ImageEx
-
-                Try
-                    imagen.Source = New BitmapImage(juego.ImagenGrande)
-                Catch ex As Exception
-
-                End Try
-
-                imagen.IsCacheEnabled = True
-                imagen.Stretch = Stretch.Uniform
-                imagen.Padding = New Thickness(0, 0, 0, 0)
+                Dim imagen As New ImageEx With {
+                    .Source = juego.ImagenAncha,
+                    .IsCacheEnabled = True,
+                    .Stretch = Stretch.UniformToFill,
+                    .Padding = New Thickness(0, 0, 0, 0)
+                }
 
                 boton.Tag = juego
                 boton.Content = imagen
                 boton.Padding = New Thickness(0, 0, 0, 0)
-                boton.BorderThickness = New Thickness(1, 1, 1, 1)
-                boton.BorderBrush = New SolidColorBrush(Colors.Black)
                 boton.Background = New SolidColorBrush(Colors.Transparent)
+
+                panel.Content = boton
 
                 Dim tbToolTip As TextBlock = New TextBlock With {
                     .Text = juego.Titulo,
@@ -199,15 +208,16 @@ Module Twitch
                 AddHandler boton.PointerEntered, AddressOf UsuarioEntraBoton
                 AddHandler boton.PointerExited, AddressOf UsuarioSaleBoton
 
-                gv.Items.Add(boton)
+                gv.Items.Add(panel)
             Next
 
             If boolBuscarCarpeta = True Then
                 Toast(listaJuegos.Count.ToString + " " + recursos.GetString("GamesDetected"), Nothing)
             End If
         Else
-            panelAvisoNoJuegos.Visibility = Visibility.Visible
-            gridSeleccionar.Visibility = Visibility.Collapsed
+            gridTiles.Visibility = Visibility.Collapsed
+            gridAvisoNoJuegos.Visibility = Visibility.Visible
+            gridSeleccionarJuego.Visibility = Visibility.Collapsed
         End If
 
         botonAñadir.IsEnabled = True
@@ -232,6 +242,18 @@ Module Twitch
 
         Dim tbJuegoSeleccionado As TextBlock = pagina.FindName("tbJuegoSeleccionado")
         tbJuegoSeleccionado.Text = juego.Titulo
+
+        Dim gridSeleccionarJuego As Grid = pagina.FindName("gridSeleccionarJuego")
+        gridSeleccionarJuego.Visibility = Visibility.Collapsed
+
+        Dim gvTiles As GridView = pagina.FindName("gvTiles")
+
+        If gvTiles.ActualWidth > anchoColumna Then
+            ApplicationData.Current.LocalSettings.Values("ancho_grid_tiles") = gvTiles.ActualWidth
+        End If
+
+        gvTiles.Width = anchoColumna
+        gvTiles.Padding = New Thickness(0, 0, 15, 0)
 
         Dim gridAñadir As Grid = pagina.FindName("gridAñadirTile")
         gridAñadir.Visibility = Visibility.Visible
@@ -281,72 +303,39 @@ Module Twitch
 
         '---------------------------------------------
 
-        Dim titulo1 As TextBlock = pagina.FindName("tituloTileAnchaEnseñar")
-        Dim titulo2 As TextBlock = pagina.FindName("tituloTileAnchaPersonalizar")
-
-        Dim titulo3 As TextBlock = pagina.FindName("tituloTileGrandeEnseñar")
-        Dim titulo4 As TextBlock = pagina.FindName("tituloTileGrandePersonalizar")
-
-        titulo1.Text = juego.Titulo
-        titulo2.Text = juego.Titulo
-
-        titulo3.Text = juego.Titulo
-        titulo4.Text = juego.Titulo
+        Dim imagenPequeña As ImageEx = pagina.FindName("imagenTilePequeña")
+        imagenPequeña.Source = Nothing
 
         If Not juego.ImagenPequeña = Nothing Then
-            Dim imagenPequeña1 As ImageEx = pagina.FindName("imagenTilePequeñaEnseñar")
-            Dim imagenPequeña2 As ImageEx = pagina.FindName("imagenTilePequeñaGenerar")
-            Dim imagenPequeña3 As ImageEx = pagina.FindName("imagenTilePequeñaPersonalizar")
-
-            imagenPequeña1.Source = juego.ImagenPequeña
-            imagenPequeña2.Source = juego.ImagenPequeña
-            imagenPequeña3.Source = juego.ImagenPequeña
-
-            imagenPequeña1.Tag = juego.ImagenPequeña
-            imagenPequeña2.Tag = juego.ImagenPequeña
-            imagenPequeña3.Tag = juego.ImagenPequeña
+            imagenPequeña.Source = juego.ImagenPequeña
+            imagenPequeña.Tag = juego.ImagenPequeña
         End If
 
-        If Not juego.ImagenMediana = Nothing Then
-            Dim imagenMediana1 As ImageEx = pagina.FindName("imagenTileMedianaEnseñar")
-            Dim imagenMediana2 As ImageEx = pagina.FindName("imagenTileMedianaGenerar")
-            Dim imagenMediana3 As ImageEx = pagina.FindName("imagenTileMedianaPersonalizar")
+        Dim imagenMediana As ImageEx = pagina.FindName("imagenTileMediana")
+        imagenMediana.Source = Nothing
 
-            imagenMediana1.Source = juego.ImagenMediana
-            imagenMediana2.Source = juego.ImagenMediana
-            imagenMediana3.Source = juego.ImagenMediana
-
-            imagenMediana1.Tag = juego.ImagenMediana
-            imagenMediana2.Tag = juego.ImagenMediana
-            imagenMediana3.Tag = juego.ImagenMediana
-        End If
+        Dim imagenAncha As ImageEx = pagina.FindName("imagenTileAncha")
+        imagenAncha.Source = Nothing
 
         If Not juego.ImagenAncha = Nothing Then
-            Dim imagenAncha1 As ImageEx = pagina.FindName("imagenTileAnchaEnseñar")
-            Dim imagenAncha2 As ImageEx = pagina.FindName("imagenTileAnchaGenerar")
-            Dim imagenAncha3 As ImageEx = pagina.FindName("imagenTileAnchaPersonalizar")
+            If Not juego.ImagenMediana = Nothing Then
+                imagenMediana.Source = juego.ImagenMediana
+                imagenMediana.Tag = juego.ImagenMediana
+            Else
+                imagenMediana.Source = juego.ImagenAncha
+                imagenMediana.Tag = juego.ImagenAncha
+            End If
 
-            imagenAncha1.Source = juego.ImagenAncha
-            imagenAncha2.Source = juego.ImagenAncha
-            imagenAncha3.Source = juego.ImagenAncha
-
-            imagenAncha1.Tag = juego.ImagenAncha
-            imagenAncha2.Tag = juego.ImagenAncha
-            imagenAncha3.Tag = juego.ImagenAncha
+            imagenAncha.Source = juego.ImagenAncha
+            imagenAncha.Tag = juego.ImagenAncha
         End If
 
+        Dim imagenGrande As ImageEx = pagina.FindName("imagenTileGrande")
+        imagenGrande.Source = Nothing
+
         If Not juego.ImagenGrande = Nothing Then
-            Dim imagenGrande1 As ImageEx = pagina.FindName("imagenTileGrandeEnseñar")
-            Dim imagenGrande2 As ImageEx = pagina.FindName("imagenTileGrandeGenerar")
-            Dim imagenGrande3 As ImageEx = pagina.FindName("imagenTileGrandePersonalizar")
-
-            imagenGrande1.Source = juego.ImagenGrande
-            imagenGrande2.Source = juego.ImagenGrande
-            imagenGrande3.Source = juego.ImagenGrande
-
-            imagenGrande1.Tag = juego.ImagenGrande
-            imagenGrande2.Tag = juego.ImagenGrande
-            imagenGrande3.Tag = juego.ImagenGrande
+            imagenGrande.Source = juego.ImagenGrande
+            imagenGrande.Tag = juego.ImagenGrande
         End If
 
     End Sub

@@ -132,8 +132,10 @@
     <Compile Include="Modulos\NavigationViewItems.vb" />
     <Compile Include="Modulos\Notificaciones.vb" />
     <Compile Include="Modulos\Steam.vb" />
+    <Compile Include="Modulos\Tiles\Añadir.vb" />
+    <Compile Include="Modulos\Tiles\Imagen.vb" />
+    <Compile Include="Modulos\Tiles\Personalizacion.vb" />
     <Compile Include="Modulos\Twitch.vb" />
-    <Compile Include="Modulos\Tiles.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
   </ItemGroup>
   <ItemGroup>
