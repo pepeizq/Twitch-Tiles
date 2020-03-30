@@ -12,7 +12,7 @@ Imports Windows.UI.Xaml.Media.Animation
 
 Module Twitch
 
-    Public anchoColumna As Integer = 306
+    Public anchoColumna As Integer = 320
     Dim clave As String = "TwitchCarpeta"
 
     Public Async Sub Generar(boolBuscarCarpeta As Boolean)
@@ -144,7 +144,7 @@ Module Twitch
 
                             End Try
 
-                            Dim tile As New Tile(juego.Titulo, juego.ID, "twitch://fuel-launch/" + juego.ID, Nothing, New Uri(imagen), Nothing, New Uri(imagen))
+                            Dim tile As New Tile(juego.Titulo, juego.ID, "twitch://fuel-launch/" + juego.ID, imagen, imagen, imagen, imagen)
 
                             listaJuegos.Add(tile)
                         End If
@@ -183,7 +183,7 @@ Module Twitch
                 Dim boton As New Button
 
                 Dim imagen As New ImageEx With {
-                    .Source = juego.ImagenAncha,
+                    .Source = juego.ImagenGrande,
                     .IsCacheEnabled = True,
                     .Stretch = Stretch.UniformToFill,
                     .Padding = New Thickness(0, 0, 0, 0)
@@ -234,11 +234,45 @@ Module Twitch
         Dim botonJuego As Button = e.OriginalSource
         Dim juego As Tile = botonJuego.Tag
 
+        '---------------------------------------------
+
+        Dim htmlSteam As String = Await Decompiladores.HttpClient(New Uri("https://store.steampowered.com/search/?term=" + juego.Titulo.Replace(" ", "+")))
+
+        If Not htmlSteam = Nothing Then
+            Dim temp5, temp6 As String
+            Dim int5, int6 As Integer
+
+            int5 = htmlSteam.IndexOf("<!-- List Items -->")
+
+            If Not int5 = -1 Then
+                temp5 = htmlSteam.Remove(0, int5)
+
+                int5 = temp5.IndexOf("<span class=" + ChrW(34) + "title" + ChrW(34) + ">" + juego.Titulo + "</span>")
+
+                If Not int5 = -1 Then
+                    temp5 = temp5.Remove(int5, temp5.Length - int5)
+
+                    int5 = temp5.LastIndexOf("data-ds-appid=")
+                    temp5 = temp5.Remove(0, int5 + 15)
+
+                    int6 = temp5.IndexOf(ChrW(34))
+                    temp6 = temp5.Remove(int6, temp5.Length - int6)
+
+                    Dim idSteam As String = temp6.Trim
+
+                    juego.ImagenPequeña = Await Steam.SacarIcono(idSteam)
+                    juego.ImagenAncha = "https://steamcdn-a.akamaihd.net/steam/apps/" + idSteam + "/header.jpg"
+                End If
+            End If
+        End If
+
+        '---------------------------------------------
+
         Dim botonAñadirTile As Button = pagina.FindName("botonAñadirTile")
         botonAñadirTile.Tag = juego
 
         Dim imagenJuegoSeleccionado As ImageEx = pagina.FindName("imagenJuegoSeleccionado")
-        imagenJuegoSeleccionado.Source = New BitmapImage(juego.ImagenGrande)
+        imagenJuegoSeleccionado.Source = New BitmapImage(New Uri(juego.ImagenAncha))
 
         Dim tbJuegoSeleccionado As TextBlock = pagina.FindName("tbJuegoSeleccionado")
         tbJuegoSeleccionado.Text = juego.Titulo
@@ -268,38 +302,6 @@ Module Twitch
 
         Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
         tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + juego.Titulo
-
-        '---------------------------------------------
-
-        Dim htmlSteam As String = Await Decompiladores.HttpClient(New Uri("https://store.steampowered.com/search/?term=" + juego.Titulo.Replace(" ", "+")))
-
-        If Not htmlSteam = Nothing Then
-            Dim temp5, temp6 As String
-            Dim int5, int6 As Integer
-
-            int5 = htmlSteam.IndexOf("<!-- List Items -->")
-
-            If Not int5 = -1 Then
-                temp5 = htmlSteam.Remove(0, int5)
-
-                int5 = temp5.IndexOf("<span class=" + ChrW(34) + "title" + ChrW(34) + ">" + juego.Titulo + "</span>")
-
-                If Not int5 = -1 Then
-                    temp5 = temp5.Remove(int5, temp5.Length - int5)
-
-                    int5 = temp5.LastIndexOf("data-ds-appid=")
-                    temp5 = temp5.Remove(0, int5 + 15)
-
-                    int6 = temp5.IndexOf(ChrW(34))
-                    temp6 = temp5.Remove(int6, temp5.Length - int6)
-
-                    Dim idSteam As String = temp6.Trim
-
-                    juego.ImagenPequeña = Await Steam.SacarIcono(idSteam)
-                    juego.ImagenAncha = New Uri("http://cdn.edgecast.steamstatic.com/steam/apps/" + idSteam + "/header.jpg", UriKind.RelativeOrAbsolute)
-                End If
-            End If
-        End If
 
         '---------------------------------------------
 

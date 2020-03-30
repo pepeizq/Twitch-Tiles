@@ -17,15 +17,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--<controls:AdaptiveGridView x:Name="gridViewTiles" Grid.Row="1" Margin="0,20,0,0"
-                                       IsItemClickEnabled="True" DesiredWidth="150" ItemHeight="200" 
-                                       animations:ReorderGridAnimation.Duration="250">
-        </controls:AdaptiveGridView>-->
-
-        <!--<Border Grid.Column="0" BorderThickness="1" BorderBrush="{StaticResource BrushPrimario}" Width="184" Height="69" VerticalAlignment="Center">
-            <controls:ImageEx x:Name="imagenJuegoSeleccionado" Stretch="UniformToFill" IsCacheEnabled="True"/>
-        </Border>-->
-
         <Grid x:Name="gridTitulo" Grid.Row="0" Background="{StaticResource GridTituloBackground}">
             <TextBlock x:Name="tbTitulo" Margin="15,0,0,0" FontSize="13" Foreground="White" VerticalAlignment="Center"/>
         </Grid>
@@ -81,7 +72,7 @@
                         </Grid.ColumnDefinitions>
 
                         <controls:AdaptiveGridView x:Name="gvTiles" Grid.Column="0" Padding="5,0,5,0"
-                                       IsItemClickEnabled="True" DesiredWidth="306" ItemHeight="142" 
+                                       IsItemClickEnabled="True" DesiredWidth="280" ItemHeight="400" 
                                        animations:ReorderGridAnimation.Duration="250">
                         </controls:AdaptiveGridView>
 
@@ -232,7 +223,7 @@
                                     <Button.Content>
                                         <controls:DropShadowPanel ShadowOpacity="0.9" BlurRadius="5">
                                             <Grid x:Name="gridTileGrande" Background="{StaticResource BrushTercero}" Width="310" Height="310">
-                                                <controls:ImageEx x:Name="imagenTileGrande" IsCacheEnabled="True" Stretch="UniformToFill"/>
+                                                <controls:ImageEx x:Name="imagenTileGrande" IsCacheEnabled="True" Stretch="Uniform"/>
                                             </Grid>
                                         </controls:DropShadowPanel>
                                     </Button.Content>

@@ -1,9 +1,9 @@
 ﻿Module Steam
 
-    Public Async Function SacarIcono(id As String) As Task(Of Uri)
+    Public Async Function SacarIcono(id As String) As Task(Of String)
 
         Dim html As String = Await Decompiladores.HttpClient(New Uri("https://store.steampowered.com/app/" + id + "/"))
-        Dim uriIcono As Uri = Nothing
+        Dim uriIcono As String = Nothing
 
         If Not html = Nothing Then
             If html.Contains("<div class=" + ChrW(34) + "apphub_AppIcon") Then
@@ -21,7 +21,7 @@
 
                 temp2 = temp2.Replace("%CDN_HOST_MEDIA_SSL%", "steamcdn-a.akamaihd.net")
 
-                uriIcono = New Uri(temp2.Trim)
+                uriIcono = temp2.Trim
             End If
         End If
 
@@ -42,7 +42,7 @@
                     int2 = temp.IndexOf(ChrW(34))
                     temp2 = temp.Remove(int2, temp.Length - int2)
 
-                    uriIcono = New Uri(temp2.Trim)
+                    uriIcono = temp2.Trim
                 End If
             End If
         End If

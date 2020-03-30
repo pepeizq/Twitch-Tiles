@@ -10,7 +10,7 @@ Namespace Tiles
     Module Personalizacion
 
         ReadOnly listaIconos As New List(Of String) From {
-            "1", "2", "3", "4", "5", "6", "7"
+            "1", "2", "3"
         }
 
         Public Async Sub Cargar(grid As Grid, tipo As Integer, fuente As String)
