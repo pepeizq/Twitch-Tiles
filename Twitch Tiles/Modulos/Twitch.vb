@@ -390,7 +390,7 @@ Module Twitch
 
         tbCarpetas.Text = recursos.GetString("Ninguna")
 
-        Dim gv As GridView = pagina.FindName("gridViewTilesTwitch")
+        Dim gv As GridView = pagina.FindName("gvTiles")
         gv.Items.Clear()
 
         Generar(False)
