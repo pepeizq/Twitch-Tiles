@@ -12,7 +12,7 @@ Imports Windows.UI.Xaml.Media.Animation
 
 Module Twitch
 
-    Public anchoColumna As Integer = 320
+    Public anchoColumna As Integer = 200
     Dim clave As String = "TwitchCarpeta"
 
     Public Async Sub Generar(boolBuscarCarpeta As Boolean)
@@ -163,12 +163,14 @@ Module Twitch
 
         Dim gridTiles As Grid = pagina.FindName("gridTiles")
         Dim gridAvisoNoJuegos As Grid = pagina.FindName("gridAvisoNoJuegos")
+        Dim spBuscador As StackPanel = pagina.FindName("spBuscador")
 
         If Not listaJuegos Is Nothing Then
             If listaJuegos.Count > 0 Then
                 gridTiles.Visibility = Visibility.Visible
                 gridAvisoNoJuegos.Visibility = Visibility.Collapsed
                 gridSeleccionarJuego.Visibility = Visibility.Visible
+                spBuscador.Visibility = Visibility.Visible
 
                 listaJuegos.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
 
@@ -178,18 +180,20 @@ Module Twitch
                     BotonEstilo(juego, gv)
                 Next
 
-                If boolBuscarCarpeta = True Then
-                    Toast(listaJuegos.Count.ToString + " " + recursos.GetString("GamesDetected"), Nothing)
-                End If
+                'If boolBuscarCarpeta = True Then
+                '    Toast(listaJuegos.Count.ToString + " " + recursos.GetString("GamesDetected"), Nothing)
+                'End If
             Else
                 gridTiles.Visibility = Visibility.Collapsed
                 gridAvisoNoJuegos.Visibility = Visibility.Visible
                 gridSeleccionarJuego.Visibility = Visibility.Collapsed
+                spBuscador.Visibility = Visibility.Collapsed
             End If
         Else
             gridTiles.Visibility = Visibility.Collapsed
             gridAvisoNoJuegos.Visibility = Visibility.Visible
             gridSeleccionarJuego.Visibility = Visibility.Collapsed
+            spBuscador.Visibility = Visibility.Collapsed
         End If
 
         botonAñadir.IsEnabled = True
@@ -201,10 +205,12 @@ Module Twitch
     Public Sub BotonEstilo(juego As Tile, gv As GridView)
 
         Dim panel As New DropShadowPanel With {
-            .Margin = New Thickness(5, 5, 5, 5),
+            .Margin = New Thickness(10, 10, 10, 10),
             .ShadowOpacity = 0.9,
-            .BlurRadius = 5,
-            .MaxWidth = anchoColumna + 10
+            .BlurRadius = 10,
+            .MaxWidth = anchoColumna + 20,
+            .HorizontalAlignment = HorizontalAlignment.Center,
+            .VerticalAlignment = VerticalAlignment.Center
         }
 
         Dim boton As New Button
@@ -212,8 +218,10 @@ Module Twitch
         Dim imagen As New ImageEx With {
             .Source = juego.ImagenGrande,
             .IsCacheEnabled = True,
-            .Stretch = Stretch.UniformToFill,
-            .Padding = New Thickness(0, 0, 0, 0)
+            .Stretch = Stretch.Uniform,
+            .Padding = New Thickness(0, 0, 0, 0),
+            .HorizontalAlignment = HorizontalAlignment.Center,
+            .VerticalAlignment = VerticalAlignment.Center
         }
 
         boton.Tag = juego
@@ -244,6 +252,9 @@ Module Twitch
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
+
+        Dim spBuscador As StackPanel = pagina.FindName("spBuscador")
+        spBuscador.Visibility = Visibility.Collapsed
 
         Dim botonJuego As Button = e.OriginalSource
         Dim juego As Tile = botonJuego.Tag
@@ -322,16 +333,19 @@ Module Twitch
         Dim imagenPequeña As ImageEx = pagina.FindName("imagenTilePequeña")
         imagenPequeña.Source = Nothing
 
-        If Not juego.ImagenPequeña = Nothing Then
-            imagenPequeña.Source = juego.ImagenPequeña
-            imagenPequeña.Tag = juego.ImagenPequeña
-        End If
-
         Dim imagenMediana As ImageEx = pagina.FindName("imagenTileMediana")
         imagenMediana.Source = Nothing
 
         Dim imagenAncha As ImageEx = pagina.FindName("imagenTileAncha")
         imagenAncha.Source = Nothing
+
+        Dim imagenGrande As ImageEx = pagina.FindName("imagenTileGrande")
+        imagenGrande.Source = Nothing
+
+        If Not juego.ImagenPequeña = Nothing Then
+            imagenPequeña.Source = juego.ImagenPequeña
+            imagenPequeña.Tag = juego.ImagenPequeña
+        End If
 
         If Not juego.ImagenAncha = Nothing Then
             If Not juego.ImagenMediana = Nothing Then
@@ -346,9 +360,6 @@ Module Twitch
             imagenAncha.Tag = juego.ImagenAncha
         End If
 
-        Dim imagenGrande As ImageEx = pagina.FindName("imagenTileGrande")
-        imagenGrande.Source = Nothing
-
         If Not juego.ImagenGrande = Nothing Then
             imagenGrande.Source = juego.ImagenGrande
             imagenGrande.Tag = juego.ImagenGrande
@@ -358,10 +369,14 @@ Module Twitch
 
     Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
 
-        Dim boton As Button = sender
-        Dim imagen As ImageEx = boton.Content
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
 
-        imagen.Saturation(0).Start()
+        Dim gvTiles As AdaptiveGridView = pagina.FindName("gvTiles")
+
+        Dim boton As Button = sender
+
+        boton.Saturation(0).Scale(1.05, 1.05, gvTiles.DesiredWidth / 2, gvTiles.ItemHeight / 2).Start()
 
         Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
 
@@ -369,10 +384,14 @@ Module Twitch
 
     Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
 
-        Dim boton As Button = sender
-        Dim imagen As ImageEx = boton.Content
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
 
-        imagen.Saturation(1).Start()
+        Dim gvTiles As AdaptiveGridView = pagina.FindName("gvTiles")
+
+        Dim boton As Button = sender
+
+        boton.Saturation(1).Scale(1, 1, gvTiles.DesiredWidth / 2, gvTiles.ItemHeight / 2).Start()
 
         Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
