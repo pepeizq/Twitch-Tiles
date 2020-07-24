@@ -39,8 +39,7 @@ Module Twitch
         Dim tbProgreso As TextBlock = pagina.FindName("tbProgreso")
         tbProgreso.Text = String.Empty
 
-        Dim botonCache As Button = pagina.FindName("botonConfigLimpiarCache")
-        botonCache.IsEnabled = False
+        Cache.Estado(False)
 
         Dim gridSeleccionarJuego As Grid = pagina.FindName("gridSeleccionarJuego")
         gridSeleccionarJuego.Visibility = Visibility.Collapsed
@@ -198,7 +197,7 @@ Module Twitch
 
         botonAñadir.IsEnabled = True
         botonBorrar.IsEnabled = True
-        botonCache.IsEnabled = True
+        Cache.Estado(True)
 
     End Sub
 
