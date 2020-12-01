@@ -319,7 +319,7 @@
     <value>Select the next folder C:\Users\[Your User]\AppData\Roaming\Twitch\Games\Sql</value>
   </data>
   <data name="Twitch_StoreDescription" xml:space="preserve">
-    <value>Add Tiles of your games from the Twitch launcher to the Windows 10 Start Menu.</value>
+    <value>Pin Tiles of your games from the Twitch launcher to the Windows 10 Start Menu.</value>
   </data>
   <data name="Twitch_StoreTags" xml:space="preserve">
     <value>Twitch,Amazon Prime,</value>
@@ -331,7 +331,7 @@
     <value>Select a game (you must have the game on Ubisoft Connect)</value>
   </data>
   <data name="Ubi_StoreDescription" xml:space="preserve">
-    <value>Add Tiles of your games from the Ubisoft Connect launcher to the Windows 10 Start Menu.</value>
+    <value>Pin Tiles of your games from the Ubisoft Connect launcher to the Windows 10 Start Menu.</value>
   </data>
   <data name="Ubi_StoreTags" xml:space="preserve">
     <value>Ubisoft,Uplay,Connect,Assassin's Creed,Far Cry,Watch Dogs,Anno,The Division,</value>
