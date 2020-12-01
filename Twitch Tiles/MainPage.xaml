@@ -513,44 +513,42 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
                                 <iconos:FontAwesome Grid.Column="0" Icon="Solid_ChevronRight" Foreground="White" FontSize="15"/>
                                 <TextBlock x:Uid="ConfigFileMessage1" Grid.Column="1" Foreground="White" TextWrapping="Wrap" Margin="15,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            </Grid>
 
-                                <Button x:Name="botonConfigImagen1" Grid.Column="2" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="15,8" BorderThickness="0">
+                            <StackPanel Orientation="Horizontal" Margin="20,20,0,0">
+                                <Button x:Name="botonConfigOpcion" Style="{ThemeResource ButtonRevealStyle}" Background="{StaticResource ColorCuarto}" Padding="18,15" BorderThickness="0">
                                     <StackPanel Orientation="Horizontal">
-                                        <iconos:FontAwesome x:Name="iconoConfigImagen1" Icon="Solid_AngleDoubleDown" Margin="0,0,15,0" VerticalAlignment="Center" Foreground="White"/>
-                                        <TextBlock x:Uid="ConfigShowImage" Foreground="White" FontSize="13"/>
+                                        <iconos:FontAwesome Icon="Solid_Cog" Margin="0,0,15,0" VerticalAlignment="Center" Foreground="White"/>
+                                        <TextBlock x:Uid="ConfigOpenOption" Foreground="White"/>
                                     </StackPanel>
                                 </Button>
-                            </Grid>
-
-                            <Grid x:Name="gridConfigImagen1" Margin="0,30,0,0" Visibility="Collapsed">
-                                <controls:ImageEx Source="Assets/Config/config1.png" HorizontalAlignment="Right" Stretch="None"/>
-                            </Grid>
+                            </StackPanel> 
 
                             <Grid Margin="0,30,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
                                 <iconos:FontAwesome Grid.Column="0" Icon="Solid_ChevronRight" Foreground="White" FontSize="15"/>
                                 <TextBlock x:Uid="ConfigFileMessage2" Grid.Column="1" Foreground="White" TextWrapping="Wrap" Margin="15,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-
-                                <Button x:Name="botonConfigImagen2" Grid.Column="2" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="15,8" BorderThickness="0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <iconos:FontAwesome x:Name="iconoConfigImagen2" Icon="Solid_AngleDoubleDown" Margin="0,0,15,0" VerticalAlignment="Center" Foreground="White"/>
-                                        <TextBlock x:Uid="ConfigShowImage" Foreground="White" FontSize="13"/>
-                                    </StackPanel>
-                                </Button> 
                             </Grid>
 
-                            <Grid x:Name="gridConfigImagen2" Margin="0,30,0,0" Visibility="Collapsed">
-                                <controls:ImageEx Source="Assets/Config/config2.png" HorizontalAlignment="Right" Stretch="None"/>
+                            <StackPanel Orientation="Horizontal" Margin="20,20,0,0">
+                                <Button x:Name="botonConfigImagen" Style="{ThemeResource ButtonRevealStyle}" Background="{StaticResource ColorCuarto}" Padding="18,15" BorderThickness="0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <iconos:FontAwesome x:Name="iconoConfigImagen" Icon="Solid_AngleDoubleDown" Margin="0,0,15,0" VerticalAlignment="Center" Foreground="White"/>
+                                        <TextBlock x:Uid="ConfigShowImage" Foreground="White"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel> 
+
+                            <Grid x:Name="gridConfigImagen" Margin="20,30,0,0" Visibility="Collapsed">
+                                <controls:ImageEx Source="Assets/Config/config.png" HorizontalAlignment="Left" Stretch="None"/>
                             </Grid>
 
                             <Grid Margin="0,40,0,0">

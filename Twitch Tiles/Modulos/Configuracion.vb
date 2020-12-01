@@ -1,4 +1,6 @@
-﻿Module Configuracion
+﻿Imports Windows.System
+
+Module Configuracion
 
     Public Sub Cargar()
 
@@ -11,17 +13,17 @@
         AddHandler botonAbrirConfig.PointerEntered, AddressOf Interfaz.EfectosHover.Entra_Boton_IconoTexto
         AddHandler botonAbrirConfig.PointerExited, AddressOf Interfaz.EfectosHover.Sale_Boton_IconoTexto
 
-        Dim botonConfigImagen1 As Button = pagina.FindName("botonConfigImagen1")
+        Dim botonConfigOpcion As Button = pagina.FindName("botonConfigOpcion")
 
-        AddHandler botonConfigImagen1.Click, AddressOf AbrirImagen1Click
-        AddHandler botonConfigImagen1.PointerEntered, AddressOf Interfaz.EfectosHover.Entra_Boton_IconoTexto
-        AddHandler botonConfigImagen1.PointerExited, AddressOf Interfaz.EfectosHover.Sale_Boton_IconoTexto
+        AddHandler botonConfigOpcion.Click, AddressOf AbrirOpcionClick
+        AddHandler botonConfigOpcion.PointerEntered, AddressOf Interfaz.EfectosHover.Entra_Boton_IconoTexto
+        AddHandler botonConfigOpcion.PointerExited, AddressOf Interfaz.EfectosHover.Sale_Boton_IconoTexto
 
-        Dim botonConfigImagen2 As Button = pagina.FindName("botonConfigImagen2")
+        Dim botonConfigImagen As Button = pagina.FindName("botonConfigImagen")
 
-        AddHandler botonConfigImagen2.Click, AddressOf AbrirImagen2Click
-        AddHandler botonConfigImagen2.PointerEntered, AddressOf Interfaz.EfectosHover.Entra_Boton_IconoTexto
-        AddHandler botonConfigImagen2.PointerExited, AddressOf Interfaz.EfectosHover.Sale_Boton_IconoTexto
+        AddHandler botonConfigImagen.Click, AddressOf AbrirImagenClick
+        AddHandler botonConfigImagen.PointerEntered, AddressOf Interfaz.EfectosHover.Entra_Boton_IconoTexto
+        AddHandler botonConfigImagen.PointerExited, AddressOf Interfaz.EfectosHover.Sale_Boton_IconoTexto
 
         Dim botonBuscarCarpetaTwitch As Button = pagina.FindName("botonBuscarCarpetaTwitch")
 
@@ -43,31 +45,19 @@
 
     End Sub
 
-    Private Sub AbrirImagen1Click(sender As Object, e As RoutedEventArgs)
+    Private Async Sub AbrirOpcionClick(sender As Object, e As RoutedEventArgs)
 
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
-
-        Dim grid As Grid = pagina.FindName("gridConfigImagen1")
-        Dim icono As FontAwesome5.FontAwesome = pagina.FindName("iconoConfigImagen1")
-
-        If grid.Visibility = Visibility.Collapsed Then
-            grid.Visibility = Visibility.Visible
-            icono.Icon = FontAwesome5.EFontAwesomeIcon.Solid_AngleDoubleUp
-        Else
-            grid.Visibility = Visibility.Collapsed
-            icono.Icon = FontAwesome5.EFontAwesomeIcon.Solid_AngleDoubleDown
-        End If
+        Await Launcher.LaunchUriAsync(New Uri(“ms-settings:privacy-broadfilesystemaccess”))
 
     End Sub
 
-    Private Sub AbrirImagen2Click(sender As Object, e As RoutedEventArgs)
+    Private Sub AbrirImagenClick(sender As Object, e As RoutedEventArgs)
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim grid As Grid = pagina.FindName("gridConfigImagen2")
-        Dim icono As FontAwesome5.FontAwesome = pagina.FindName("iconoConfigImagen2")
+        Dim grid As Grid = pagina.FindName("gridConfigImagen")
+        Dim icono As FontAwesome5.FontAwesome = pagina.FindName("iconoConfigImagen")
 
         If grid.Visibility = Visibility.Collapsed Then
             grid.Visibility = Visibility.Visible

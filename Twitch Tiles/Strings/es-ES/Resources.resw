@@ -163,7 +163,7 @@
     <value>Si limpias la caché, automáticamente volverá a descargar las imágenes de los juegos.</value>
   </data>
   <data name="ConfigFileMessage1.Text" xml:space="preserve">
-    <value>Autorizar que la aplicación pueda leer ficheros, esto se hace desde Inicio &gt; Configuración &gt; Privacidad &gt; Sistema de Archivos.</value>
+    <value>Autorizar que la aplicación pueda leer ficheros, esto se hace desde Inicio &gt; Configuración &gt; Privacidad &gt; Sistema de Archivos (al activar la opción se cerrará la aplicación).</value>
   </data>
   <data name="ConfigFileMessage2.Text" xml:space="preserve">
     <value>Desoculta los ficheros y carpetas, esta opción se encuentra en Opciones del Exploradores de Archivos (usar el buscador para encontrar la opción).</value>
@@ -176,6 +176,9 @@
   </data>
   <data name="ConfigOpen.Text" xml:space="preserve">
     <value>Abrir Configuración</value>
+  </data>
+  <data name="ConfigOpenOption.Text" xml:space="preserve">
+    <value>Abrir opción</value>
   </data>
   <data name="ConfigSearchFolder.Text" xml:space="preserve">
     <value>Buscar Carpeta</value>

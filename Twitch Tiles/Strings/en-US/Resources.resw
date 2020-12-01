@@ -163,7 +163,7 @@
     <value>If you clear the cache, it will automatically re-download the images of the games.</value>
   </data>
   <data name="ConfigFileMessage1.Text" xml:space="preserve">
-    <value>Authorize the application to read files, this is configured from Start &gt; Settings &gt; Privacy &gt; File System.</value>
+    <value>Authorize the application to read files, to do so you must go to Start &gt; Settings &gt; Privacy &gt; File System (activating the option will close the application).</value>
   </data>
   <data name="ConfigFileMessage2.Text" xml:space="preserve">
     <value>Unhide files and folders, this option is found in File Explorer Options (use the search engine to find the option).</value>
@@ -176,6 +176,9 @@
   </data>
   <data name="ConfigOpen.Text" xml:space="preserve">
     <value>Open Configuration</value>
+  </data>
+  <data name="ConfigOpenOption.Text" xml:space="preserve">
+    <value>Open option</value>
   </data>
   <data name="ConfigSearchFolder.Text" xml:space="preserve">
     <value>Search Folder</value>

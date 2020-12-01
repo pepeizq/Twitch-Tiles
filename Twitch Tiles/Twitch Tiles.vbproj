@@ -157,8 +157,7 @@
     <None Include="Twitch Tiles_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Config\config1.png" />
-    <Content Include="Assets\Config\config2.png" />
+    <Content Include="Assets\Config\config.png" />
     <Content Include="Assets\Iconos\1.png" />
     <Content Include="Assets\Iconos\2.png" />
     <Content Include="Assets\Iconos\3.png" />
