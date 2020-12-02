@@ -10,9 +10,9 @@ Imports Windows.UI
 Module Twitch
 
     Public anchoColumna As Integer = 180
-    Dim clave As String = "TwitchCarpeta3"
+    Dim clave As String = "TwitchFichero2"
 
-    Public Async Sub Generar(buscarCarpeta As Boolean)
+    Public Async Sub Generar(buscarFichero As Boolean)
 
         Dim helper As New LocalObjectStorageHelper
 
@@ -34,40 +34,33 @@ Module Twitch
             listaJuegos = Await helper.ReadFileAsync(Of List(Of Tile))("juegos")
         End If
 
-        If buscarCarpeta = True Then
+        If buscarFichero = True Then
             Try
-                Dim picker As New FolderPicker()
-                picker.FileTypeFilter.Add("*")
+                Dim picker As New FileOpenPicker()
+                picker.FileTypeFilter.Add(".sqlite")
                 picker.ViewMode = PickerViewMode.List
 
-                Dim carpeta As StorageFolder = Await picker.PickSingleFolderAsync()
+                Dim fichero As StorageFile = Await picker.PickSingleFileAsync
 
-                If Not carpeta Is Nothing Then
-                    StorageApplicationPermissions.FutureAccessList.AddOrReplace(clave, carpeta)
+                If Not fichero Is Nothing Then
+                    StorageApplicationPermissions.FutureAccessList.AddOrReplace(clave, fichero)
                 End If
             Catch ex As Exception
 
-            End Try
-        Else
-            Dim carpeta As StorageFolder = Nothing
-
-            Try
-                carpeta = Await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(clave)
-            Catch ex As Exception
             End Try
         End If
 
         '-------------------------------------------------------------
 
-        Dim carpetaMaestra As StorageFolder = Nothing
+        Dim ficheroMaestro As StorageFile = Nothing
 
         Try
-            carpetaMaestra = Await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(clave)
+            ficheroMaestro = Await StorageApplicationPermissions.FutureAccessList.GetFileAsync(clave)
         Catch ex As Exception
 
         End Try
 
-        If Not carpetaMaestra Is Nothing Then
+        If Not ficheroMaestro Is Nothing Then
             Dim gridProgreso As Grid = pagina.FindName("gridProgreso")
             Interfaz.Pestañas.Visibilidad_Pestañas(gridProgreso, Nothing)
 
@@ -77,62 +70,50 @@ Module Twitch
             Dim tbProgreso As TextBlock = pagina.FindName("tbProgreso")
             tbProgreso.Text = String.Empty
 
-            Dim fichero As String = carpetaMaestra.Path + "\GameProductInfo.sqlite"
-
-            Dim bdOrigen As StorageFile = Nothing
+            Dim bdFinal As StorageFile = Nothing
 
             Try
-                bdOrigen = Await StorageFile.GetFileFromPathAsync(fichero)
+                bdFinal = Await ApplicationData.Current.LocalFolder.CreateFileAsync("basedatos.sqlite", CreationCollisionOption.ReplaceExisting)
             Catch ex As Exception
 
             End Try
 
-            If Not bdOrigen Is Nothing Then
-                Dim bdFinal As StorageFile = Nothing
+            If Not bdFinal Is Nothing Then
+                Await ficheroMaestro.CopyAndReplaceAsync(bdFinal)
 
-                Try
-                    bdFinal = Await ApplicationData.Current.LocalFolder.CreateFileAsync("basedatos.sqlite", CreationCollisionOption.ReplaceExisting)
-                Catch ex As Exception
+                Dim conexion As New SQLiteConnection(New SQLitePlatformWinRT, bdFinal.Path, Interop.SQLiteOpenFlags.ReadOnly)
 
-                End Try
+                Dim juegos As TableQuery(Of TwitchDB) = conexion.Table(Of TwitchDB)
 
-                If Not bdFinal Is Nothing Then
-                    Await bdOrigen.CopyAndReplaceAsync(bdFinal)
-
-                    Dim conexion As New SQLiteConnection(New SQLitePlatformWinRT, bdFinal.Path, Interop.SQLiteOpenFlags.ReadWrite)
-
-                    Dim juegos As TableQuery(Of TwitchDB) = conexion.Table(Of TwitchDB)
-
-                    Dim k As Integer = 0
-                    For Each juego As TwitchDB In juegos
-                        Dim añadir As Boolean = True
-                        Dim g As Integer = 0
-                        While g < listaJuegos.Count
-                            If listaJuegos(g).ID = juego.ID Then
-                                añadir = False
-                            End If
-                            g += 1
-                        End While
-
-                        If añadir = True Then
-                            Dim imagen As String = String.Empty
-
-                            Try
-                                imagen = Await Cache.DescargarImagen(juego.Imagen, juego.ID, "base")
-                            Catch ex As Exception
-
-                            End Try
-
-                            Dim tile As New Tile(juego.Titulo, juego.ID, "twitch://fuel-launch/" + juego.ID, imagen, imagen, imagen, imagen)
-
-                            listaJuegos.Add(tile)
+                Dim k As Integer = 0
+                For Each juego As TwitchDB In juegos
+                    Dim añadir As Boolean = True
+                    Dim g As Integer = 0
+                    While g < listaJuegos.Count
+                        If listaJuegos(g).ID = juego.ID Then
+                            añadir = False
                         End If
+                        g += 1
+                    End While
 
-                        pbProgreso.Value = CInt((100 / juegos.Count) * k)
-                        tbProgreso.Text = k.ToString + "/" + juegos.Count.ToString
-                        k += 1
-                    Next
-                End If
+                    If añadir = True Then
+                        Dim imagen As String = String.Empty
+
+                        Try
+                            imagen = Await Cache.DescargarImagen(juego.Imagen, juego.ID, "base")
+                        Catch ex As Exception
+
+                        End Try
+
+                        Dim tile As New Tile(juego.Titulo, juego.ID, "twitch://fuel-launch/" + juego.ID, imagen, imagen, imagen, imagen)
+
+                        listaJuegos.Add(tile)
+                    End If
+
+                    pbProgreso.Value = CInt((100 / juegos.Count) * k)
+                    tbProgreso.Text = k.ToString + "/" + juegos.Count.ToString
+                    k += 1
+                Next
             End If
         End If
 
@@ -308,25 +289,6 @@ Module Twitch
             imagenGrande.Source = juego.ImagenGrande
             imagenGrande.Tag = juego.ImagenGrande
         End If
-
-    End Sub
-
-    Public Sub Borrar()
-
-        StorageApplicationPermissions.FutureAccessList.Clear()
-
-        Dim recursos As New Resources.ResourceLoader()
-
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
-        Dim tbCarpetas As TextBlock = pagina.FindName("tbCarpetasDetectadasTwitch")
-
-        tbCarpetas.Text = recursos.GetString("Ninguna")
-
-        Dim gv As GridView = pagina.FindName("gvTiles")
-        gv.Items.Clear()
-
-        Generar(False)
 
     End Sub
 

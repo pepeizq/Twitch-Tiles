@@ -1,6 +1,4 @@
-﻿Imports Windows.System
-
-Module Configuracion
+﻿Module Configuracion
 
     Public Sub Cargar()
 
@@ -13,19 +11,13 @@ Module Configuracion
         AddHandler botonAbrirConfig.PointerEntered, AddressOf Interfaz.EfectosHover.Entra_Boton_IconoTexto
         AddHandler botonAbrirConfig.PointerExited, AddressOf Interfaz.EfectosHover.Sale_Boton_IconoTexto
 
-        Dim botonConfigOpcion As Button = pagina.FindName("botonConfigOpcion")
-
-        AddHandler botonConfigOpcion.Click, AddressOf AbrirOpcionClick
-        AddHandler botonConfigOpcion.PointerEntered, AddressOf Interfaz.EfectosHover.Entra_Boton_IconoTexto
-        AddHandler botonConfigOpcion.PointerExited, AddressOf Interfaz.EfectosHover.Sale_Boton_IconoTexto
-
         Dim botonConfigImagen As Button = pagina.FindName("botonConfigImagen")
 
         AddHandler botonConfigImagen.Click, AddressOf AbrirImagenClick
         AddHandler botonConfigImagen.PointerEntered, AddressOf Interfaz.EfectosHover.Entra_Boton_IconoTexto
         AddHandler botonConfigImagen.PointerExited, AddressOf Interfaz.EfectosHover.Sale_Boton_IconoTexto
 
-        Dim botonBuscarCarpetaTwitch As Button = pagina.FindName("botonBuscarCarpetaTwitch")
+        Dim botonBuscarCarpetaTwitch As Button = pagina.FindName("botonBuscarFicheroTwitch")
 
         AddHandler botonBuscarCarpetaTwitch.Click, AddressOf BuscarTwitchClick
         AddHandler botonBuscarCarpetaTwitch.PointerEntered, AddressOf Interfaz.EfectosHover.Entra_Boton_IconoTexto
@@ -42,12 +34,6 @@ Module Configuracion
 
         Dim recursos As New Resources.ResourceLoader()
         Interfaz.Pestañas.Visibilidad_Pestañas(gridConfig, recursos.GetString("Config"))
-
-    End Sub
-
-    Private Async Sub AbrirOpcionClick(sender As Object, e As RoutedEventArgs)
-
-        Await Launcher.LaunchUriAsync(New Uri(“ms-settings:privacy-broadfilesystemaccess”))
 
     End Sub
 
@@ -83,8 +69,8 @@ Module Configuracion
         Dim botonAbrirConfig As Button = pagina.FindName("botonAbrirConfig")
         botonAbrirConfig.IsEnabled = estado
 
-        Dim botonBuscarCarpetaTwitch As Button = pagina.FindName("botonBuscarCarpetaTwitch")
-        botonBuscarCarpetaTwitch.IsEnabled = estado
+        Dim botonBuscarFicheroTwitch As Button = pagina.FindName("botonBuscarFicheroTwitch")
+        botonBuscarFicheroTwitch.IsEnabled = estado
 
     End Sub
 

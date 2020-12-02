@@ -123,8 +123,32 @@
   <data name="AddTile.Text" xml:space="preserve">
     <value>Añadir Tile</value>
   </data>
+  <data name="Amazon_ConfigFolderPath.Text" xml:space="preserve">
+    <value>Seleccionar la siguiente carpeta: C:\Usuarios\[Tu Usuario]\AppData\Local\Amazon Games\Data\Games\Sql</value>
+  </data>
+  <data name="Amazon_StoreDescription" xml:space="preserve">
+    <value>Añade Tiles de tus juegos del launcher de Amazon Games en el Menú Inicio de Windows 10.</value>
+  </data>
+  <data name="Amazon_StoreTags" xml:space="preserve">
+    <value>Amazon,Amazon Prime,</value>
+  </data>
+  <data name="Bethesda_MissingGames.Text" xml:space="preserve">
+    <value>Por restricciones en la API de Bethesda, debo integrar sus juegos manualmente en la app.</value>
+  </data>
+  <data name="Bethesda_SelectGame.Text" xml:space="preserve">
+    <value>Selecciona un juego (debes tener el juego en el launcher de Bethesda)</value>
+  </data>
+  <data name="Bethesda_StoreDescription" xml:space="preserve">
+    <value>Añade Tiles de tus juegos del launcher de Bethesda en el Menú Inicio de Windows 10.</value>
+  </data>
+  <data name="Bethesda_StoreTags" xml:space="preserve">
+    <value>Bethesda,Fallout,Elder Scrolls,Wolfenstein,Doom,Dishonored,Rage</value>
+  </data>
   <data name="Black" xml:space="preserve">
     <value>Negro</value>
+  </data>
+  <data name="Blizzard_SelectGame.Text" xml:space="preserve">
+    <value>Selecciona un juego (debes tener el juego en Battle.net)</value>
   </data>
   <data name="BottomLeft" xml:space="preserve">
     <value>Abajo Izquierda</value>
@@ -162,10 +186,7 @@
   <data name="ConfigCacheMessage.Text" xml:space="preserve">
     <value>Si limpias la caché, automáticamente volverá a descargar las imágenes de los juegos.</value>
   </data>
-  <data name="ConfigFileMessage1.Text" xml:space="preserve">
-    <value>Autorizar que la aplicación pueda leer ficheros, esto se hace desde Inicio &gt; Configuración &gt; Privacidad &gt; Sistema de Archivos (al activar la opción se cerrará la aplicación).</value>
-  </data>
-  <data name="ConfigFileMessage2.Text" xml:space="preserve">
+  <data name="ConfigFileMessage.Text" xml:space="preserve">
     <value>Desoculta los ficheros y carpetas, esta opción se encuentra en Opciones del Exploradores de Archivos (usar el buscador para encontrar la opción).</value>
   </data>
   <data name="ConfigFolderMessage.Text" xml:space="preserve">
@@ -179,6 +200,9 @@
   </data>
   <data name="ConfigOpenOption.Text" xml:space="preserve">
     <value>Abrir opción</value>
+  </data>
+  <data name="ConfigSearchFile.Text" xml:space="preserve">
+    <value>Buscar Fichero</value>
   </data>
   <data name="ConfigSearchFolder.Text" xml:space="preserve">
     <value>Buscar Carpeta</value>
@@ -319,10 +343,10 @@
     <value>Estás usando la versión de prueba de la aplicación, solo puedes tener activa una Tile.</value>
   </data>
   <data name="Twitch_ConfigFolderPath.Text" xml:space="preserve">
-    <value>Seleccionar la siguiente carpeta: C:\Usuarios\[Tu Usuario]\AppData\Roaming\Twitch\Games\Sql</value>
+    <value>Seleccionar el fichero GameProductInfo.sqlite en la carpeta: C:\Usuarios\[Tu Usuario]\AppData\Roaming\Twitch\Games\Sql</value>
   </data>
   <data name="Twitch_StoreDescription" xml:space="preserve">
-    <value>Añade Tiles de tus juegos del launcher de Twitch en el Menu Inicio de Windows 10.</value>
+    <value>Añade Tiles de tus juegos del launcher de Twitch en el Menú Inicio de Windows 10.</value>
   </data>
   <data name="Twitch_StoreTags" xml:space="preserve">
     <value>Twitch,Amazon Prime,</value>
@@ -334,7 +358,7 @@
     <value>Selecciona un juego (debes tener el juego en Ubisoft Connect)</value>
   </data>
   <data name="Ubi_StoreDescription" xml:space="preserve">
-    <value>Añade Tiles de tus juegos de Ubisoft Connect en el Menu Inicio de Windows 10.</value>
+    <value>Añade Tiles de tus juegos de Ubisoft Connect en el Menú Inicio de Windows 10.</value>
   </data>
   <data name="Ubi_StoreTags" xml:space="preserve">
     <value>Ubisoft,Uplay,Connect,Assassin's Creed,Far Cry,Watch Dogs,Anno,The Division,</value>

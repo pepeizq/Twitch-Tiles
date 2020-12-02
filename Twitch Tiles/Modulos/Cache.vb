@@ -63,8 +63,6 @@ Module Cache
 
     Public Async Function DescargarImagen(enlace As String, id As String, tipo As String) As Task(Of String)
 
-        Dim imagenFinal As String = String.Empty
-
         If ApplicationData.Current.LocalSettings.Values("cache") = 1 Then
             If Not enlace = String.Empty Then
                 If enlace.Contains("http://") Or enlace.Contains("https://") Then
@@ -114,34 +112,34 @@ Module Cache
                         End If
                     End If
                 End If
-            Else
-                Dim fichero As StorageFile = Nothing
-
-                Try
-                    fichero = Await StorageFile.GetFileFromApplicationUriAsync(New Uri("ms-appx:///Assets/Juegos/" + id + "_" + tipo + ".png"))
-                Catch ex As Exception
-
-                End Try
-
-                If Not fichero Is Nothing Then
-                    Return "Assets/Juegos/" + id + "_" + tipo + ".png"
-                End If
-
-                Try
-                    fichero = Await StorageFile.GetFileFromApplicationUriAsync(New Uri("ms-appx:///Assets/Juegos/" + id + "_" + tipo + ".jpg"))
-                Catch ex As Exception
-
-                End Try
-
-                If Not fichero Is Nothing Then
-                    Return "Assets/Juegos/" + id + "_" + tipo + ".jpg"
-                End If
             End If
-        Else
-            Return enlace
         End If
 
-        Return Nothing
+        If enlace = Nothing Then
+            Dim fichero As StorageFile = Nothing
+
+            Try
+                fichero = Await StorageFile.GetFileFromApplicationUriAsync(New Uri("ms-appx:///Assets/Juegos/" + id + "_" + tipo + ".png"))
+            Catch ex As Exception
+
+            End Try
+
+            If Not fichero Is Nothing Then
+                Return "Assets/Juegos/" + id + "_" + tipo + ".png"
+            End If
+
+            Try
+                fichero = Await StorageFile.GetFileFromApplicationUriAsync(New Uri("ms-appx:///Assets/Juegos/" + id + "_" + tipo + ".jpg"))
+            Catch ex As Exception
+
+            End Try
+
+            If Not fichero Is Nothing Then
+                Return "Assets/Juegos/" + id + "_" + tipo + ".jpg"
+            End If
+        End If
+
+        Return enlace
 
     End Function
 

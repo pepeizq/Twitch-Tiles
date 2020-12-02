@@ -516,26 +516,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <iconos:FontAwesome Grid.Column="0" Icon="Solid_ChevronRight" Foreground="White" FontSize="15"/>
-                                <TextBlock x:Uid="ConfigFileMessage1" Grid.Column="1" Foreground="White" TextWrapping="Wrap" Margin="15,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                            </Grid>
-
-                            <StackPanel Orientation="Horizontal" Margin="20,20,0,0">
-                                <Button x:Name="botonConfigOpcion" Style="{ThemeResource ButtonRevealStyle}" Background="{StaticResource ColorCuarto}" Padding="18,15" BorderThickness="0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <iconos:FontAwesome Icon="Solid_Cog" Margin="0,0,15,0" VerticalAlignment="Center" Foreground="White"/>
-                                        <TextBlock x:Uid="ConfigOpenOption" Foreground="White"/>
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel> 
-
-                            <Grid Margin="0,30,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <iconos:FontAwesome Grid.Column="0" Icon="Solid_ChevronRight" Foreground="White" FontSize="15"/>
-                                <TextBlock x:Uid="ConfigFileMessage2" Grid.Column="1" Foreground="White" TextWrapping="Wrap" Margin="15,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <TextBlock x:Uid="ConfigFileMessage" Grid.Column="1" Foreground="White" TextWrapping="Wrap" Margin="15,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             </Grid>
 
                             <StackPanel Orientation="Horizontal" Margin="20,20,0,0">
@@ -562,10 +543,10 @@
                             </Grid>
 
                             <StackPanel Orientation="Horizontal" Margin="20,20,0,0">
-                                <Button x:Name="botonBuscarCarpetaTwitch" Style="{ThemeResource ButtonRevealStyle}" Background="{StaticResource ColorCuarto}" Padding="18,15" BorderThickness="0">
+                                <Button x:Name="botonBuscarFicheroTwitch" Style="{ThemeResource ButtonRevealStyle}" Background="{StaticResource ColorCuarto}" Padding="18,15" BorderThickness="0">
                                     <StackPanel Orientation="Horizontal">
-                                        <iconos:FontAwesome Icon="Solid_Folder" Margin="0,0,15,0" VerticalAlignment="Center" Foreground="White"/>
-                                        <TextBlock x:Uid="ConfigSearchFolder" Foreground="White"/>
+                                        <iconos:FontAwesome Icon="Solid_File" Margin="0,0,15,0" VerticalAlignment="Center" Foreground="White"/>
+                                        <TextBlock x:Uid="ConfigSearchFile" Foreground="White"/>
                                     </StackPanel>
                                 </Button>
 
