@@ -124,13 +124,16 @@
     <value>Añadir Tile</value>
   </data>
   <data name="Amazon_ConfigFolderPath.Text" xml:space="preserve">
-    <value>Seleccionar la siguiente carpeta: C:\Usuarios\[Tu Usuario]\AppData\Local\Amazon Games\Data\Games\Sql</value>
+    <value>Seleccionar el fichero GameProductInfo.sqlite en la carpeta: C:\Usuarios\[Tu Usuario]\AppData\Local\Amazon Games\Data\Games\Sql</value>
   </data>
   <data name="Amazon_StoreDescription" xml:space="preserve">
     <value>Añade Tiles de tus juegos del launcher de Amazon Games en el Menú Inicio de Windows 10.</value>
   </data>
   <data name="Amazon_StoreTags" xml:space="preserve">
     <value>Amazon,Amazon Prime,</value>
+  </data>
+  <data name="Amazon_Title" xml:space="preserve">
+    <value>Tiles para los juegos de Amazon</value>
   </data>
   <data name="Bethesda_MissingGames.Text" xml:space="preserve">
     <value>Por restricciones en la API de Bethesda, debo integrar sus juegos manualmente en la app.</value>
@@ -144,11 +147,17 @@
   <data name="Bethesda_StoreTags" xml:space="preserve">
     <value>Bethesda,Fallout,Elder Scrolls,Wolfenstein,Doom,Dishonored,Rage</value>
   </data>
+  <data name="Bethesda_Title" xml:space="preserve">
+    <value>Tiles para los juegos de Bethesda</value>
+  </data>
   <data name="Black" xml:space="preserve">
     <value>Negro</value>
   </data>
   <data name="Blizzard_SelectGame.Text" xml:space="preserve">
     <value>Selecciona un juego (debes tener el juego en Battle.net)</value>
+  </data>
+  <data name="Blizzard_Title" xml:space="preserve">
+    <value>Tiles para los juegos de Battle.net</value>
   </data>
   <data name="BottomLeft" xml:space="preserve">
     <value>Abajo Izquierda</value>
@@ -318,8 +327,17 @@
   <data name="MoreThingsVideoDescription" xml:space="preserve">
     <value>Por si tienes dudas de como usar la aplicación, he subido un video a Youtube.</value>
   </data>
+  <data name="MoreTiles" xml:space="preserve">
+    <value>Más Tiles</value>
+  </data>
+  <data name="MoreTilesError" xml:space="preserve">
+    <value>No se ha podido cargar el listado de aplicaciones, pero puedes visitar mi web para verlas.</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
+  </data>
+  <data name="OpenWeb" xml:space="preserve">
+    <value>Abrir Web</value>
   </data>
   <data name="Personalization.Text" xml:space="preserve">
     <value>Personalización</value>
@@ -351,6 +369,9 @@
   <data name="Twitch_StoreTags" xml:space="preserve">
     <value>Twitch,Amazon Prime,</value>
   </data>
+  <data name="Twitch_Title" xml:space="preserve">
+    <value>Tiles para los juegos de Twitch</value>
+  </data>
   <data name="Ubi_MissingGames.Text" xml:space="preserve">
     <value>Por restricciones en la API de Ubisoft Connect, debo integrar sus juegos manualmente en la app.</value>
   </data>
@@ -362,6 +383,9 @@
   </data>
   <data name="Ubi_StoreTags" xml:space="preserve">
     <value>Ubisoft,Uplay,Connect,Assassin's Creed,Far Cry,Watch Dogs,Anno,The Division,</value>
+  </data>
+  <data name="Ubi_Title" xml:space="preserve">
+    <value>Tiles para los juegos de Ubisoft</value>
   </data>
   <data name="White" xml:space="preserve">
     <value>Blanco</value>

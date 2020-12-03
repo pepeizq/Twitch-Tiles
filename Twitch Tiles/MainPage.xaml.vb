@@ -8,6 +8,7 @@
         nvPrincipal.MenuItems.Add(Interfaz.NavigationViewItems.Generar(recursos.GetString("Games"), FontAwesome5.EFontAwesomeIcon.Solid_Home))
         nvPrincipal.MenuItems.Add(Interfaz.NavigationViewItems.Generar(recursos.GetString("Config"), FontAwesome5.EFontAwesomeIcon.Solid_Cog))
         nvPrincipal.MenuItems.Add(New NavigationViewItemSeparator)
+        nvPrincipal.MenuItems.Add(Interfaz.NavigationViewItems.Generar(recursos.GetString("MoreTiles"), FontAwesome5.EFontAwesomeIcon.Solid_ThLarge))
         nvPrincipal.MenuItems.Add(Interfaz.NavigationViewItems.Generar(recursos.GetString("MoreThings"), FontAwesome5.EFontAwesomeIcon.Solid_Cube))
 
     End Sub
@@ -27,6 +28,8 @@
                 End If
             ElseIf item.Text = recursos.GetString("Config") Then
                 Interfaz.Pestañas.Visibilidad_Pestañas(gridConfig, item.Text)
+            ElseIf item.Text = recursos.GetString("MoreTiles") Then
+                Interfaz.Pestañas.Visibilidad_Pestañas(gridMasTiles, item.Text)
             ElseIf item.Text = recursos.GetString("MoreThings") Then
                 Interfaz.Pestañas.Visibilidad_Pestañas(gridMasCosas, item.Text)
             End If
@@ -42,6 +45,7 @@
         Cache.Cargar()
         Interfaz.AñadirTile.Cargar()
         Interfaz.Busqueda.Cargar()
+        Interfaz.MasTiles.Cargar()
         Configuracion.Cargar()
         Twitch.Generar(False)
         MasCosas.Cargar()

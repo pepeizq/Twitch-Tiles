@@ -3,11 +3,13 @@
 
         Public Sub Visibilidad_Pestañas(gridMostrar As Grid, tag As String)
 
+            Dim recursos As New Resources.ResourceLoader()
+
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
             Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
-            tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ")"
+            tbTitulo.Text = recursos.GetString("Twitch_Title") + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ")"
 
             If Not tag = Nothing Then
                 tbTitulo.Text = tbTitulo.Text + " • " + tag
@@ -27,6 +29,9 @@
 
             Dim gridAvisoNoJuegos As Grid = pagina.FindName("gridAvisoNoJuegos")
             gridAvisoNoJuegos.Visibility = Visibility.Collapsed
+
+            Dim gridMasTiles As Grid = pagina.FindName("gridMasTiles")
+            gridMasTiles.Visibility = Visibility.Collapsed
 
             Dim gridMasCosas As Grid = pagina.FindName("gridMasCosas")
             gridMasCosas.Visibility = Visibility.Collapsed
