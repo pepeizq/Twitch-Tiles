@@ -163,6 +163,12 @@
     <Content Include="Assets\Iconos\2.png" />
     <Content Include="Assets\Iconos\3.png" />
     <Content Include="Assets\Iconos\4.png" />
+    <Content Include="Assets\MasCosas\github.png" />
+    <Content Include="Assets\MasCosas\pepeizqapps.png" />
+    <Content Include="Assets\MasCosas\pepeizqdeals.png" />
+    <Content Include="Assets\MasCosas\traducir.png" />
+    <Content Include="Assets\MasCosas\twitter.png" />
+    <Content Include="Assets\MasCosas\youtube.png" />
     <Content Include="Assets\twitch_logo.png" />
     <Content Include="Assets\Logos\BadgeLogo.scale-100.png" />
     <Content Include="Assets\Logos\BadgeLogo.scale-125.png" />
