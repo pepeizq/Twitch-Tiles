@@ -34,6 +34,10 @@ Module Twitch
             listaJuegos = Await helper.ReadFileAsync(Of List(Of Tile))("juegos")
         End If
 
+        If listaJuegos Is Nothing Then
+            listaJuegos = New List(Of Tile)
+        End If
+
         If buscarFichero = True Then
             Try
                 Dim picker As New FileOpenPicker()
@@ -117,7 +121,11 @@ Module Twitch
             End If
         End If
 
-        Await helper.SaveFileAsync(Of List(Of Tile))("juegos", listaJuegos)
+        Try
+            Await helper.SaveFileAsync(Of List(Of Tile))("juegos", listaJuegos)
+        Catch ex As Exception
+
+        End Try
 
         Dim iconoResultado As FontAwesome5.FontAwesome = pagina.FindName("iconoResultado")
 
