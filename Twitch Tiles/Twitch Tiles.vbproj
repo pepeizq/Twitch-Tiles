@@ -134,6 +134,7 @@
     <Compile Include="Modulos\Interfaz\Juegos.vb" />
     <Compile Include="Modulos\Interfaz\NavigationViewItems.vb" />
     <Compile Include="Modulos\Interfaz\Pestañas.vb" />
+    <Compile Include="Modulos\Limpieza.vb" />
     <Compile Include="Modulos\MasCosas.vb" />
     <Compile Include="Modulos\MasTiles.vb" />
     <Compile Include="Modulos\Notificaciones.vb" />
