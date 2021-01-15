@@ -2,6 +2,7 @@
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports SQLite.Net
 Imports SQLite.Net.Platform.WinRT
+Imports Twitch_Tiles.Configuracion
 Imports Windows.Storage
 Imports Windows.Storage.AccessCache
 Imports Windows.Storage.Pickers
@@ -23,8 +24,9 @@ Module Twitch
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Configuracion.Estado(False)
+        General.Estado(False)
         Cache.Estado(False)
+        LimpiezaArchivos.Estado(False)
 
         Dim gv As AdaptiveGridView = pagina.FindName("gvTiles")
         gv.DesiredWidth = anchoColumna
@@ -155,8 +157,9 @@ Module Twitch
             iconoResultado.Icon = Nothing
         End If
 
-        Configuracion.Estado(True)
+        General.Estado(True)
         Cache.Estado(True)
+        LimpiezaArchivos.Estado(True)
 
     End Sub
 
