@@ -3,10 +3,12 @@ Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports SQLite.Net
 Imports SQLite.Net.Platform.WinRT
 Imports Twitch_Tiles.Configuracion
+Imports Windows.ApplicationModel.Core
 Imports Windows.Storage
 Imports Windows.Storage.AccessCache
 Imports Windows.Storage.Pickers
 Imports Windows.UI
+Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Media.Animation
 
 Module Twitch
@@ -125,11 +127,14 @@ Module Twitch
             End If
         End If
 
-        Try
-            Await helper.SaveFileAsync(Of List(Of Tile))("juegos", listaJuegos)
-        Catch ex As Exception
+        Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High,
+                                                                      Async Sub()
+                                                                          Try
+                                                                              Await helper.SaveFileAsync(Of List(Of Tile))("juegos", listaJuegos)
+                                                                          Catch ex As Exception
 
-        End Try
+                                                                          End Try
+                                                                      End Sub)
 
         Dim iconoResultado As FontAwesome5.FontAwesome = pagina.FindName("iconoResultado")
 
